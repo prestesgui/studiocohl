@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guilherme Prestes - Motion Designer</title>
-  <meta name="description" content="Motion Designer & Video Editor">
+  <title>Guilherme Prestes • Motion Designer</title>
+  <meta name="description" content="Motion Designer & Video Editor • Bold, experimental animations">
   <style>
     * {
       margin: 0;
@@ -14,15 +14,61 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-      background: #FAFBFC;
-      color: #0A0A0A;
+      background: #ffffff;
+      color: #000;
       line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 40px;
+    }
+
+    /* HEADER / NAV */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 24px 40px;
+    }
+
+    nav {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 48px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      opacity: 0.6;
+      transition: opacity 0.3s;
     }
 
     /* HERO */
@@ -32,159 +78,167 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 60px 24px;
+      padding: 120px 40px 60px;
       position: relative;
-      overflow: hidden;
     }
 
     .hero::before {
       content: '';
       position: absolute;
-      top: -50%;
-      right: -10%;
-      width: 400px;
-      height: 400px;
-      background: rgba(255, 107, 74, 0.1);
-      border-radius: 50%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 800"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%%" style="stop-color:rgba(0,0,0,0.02);stop-opacity:1" /><stop offset="100%%" style="stop-color:rgba(0,0,0,0.05);stop-opacity:1" /></linearGradient></defs><rect width="1440" height="800" fill="url(%23grad)"/></svg>');
       pointer-events: none;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -50%;
-      left: -10%;
-      width: 500px;
-      height: 500px;
-      background: rgba(230, 57, 70, 0.1);
-      border-radius: 50%;
-      pointer-events: none;
+      z-index: 0;
     }
 
     .hero-content {
       position: relative;
-      z-index: 2;
-      animation: fadeInUp 1s ease;
+      z-index: 1;
+      max-width: 900px;
+      animation: fadeIn 1s ease-out;
     }
 
     .hero h1 {
-      font-size: clamp(48px, 8vw, 96px);
-      font-weight: 800;
+      font-size: clamp(60px, 12vw, 120px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -3px;
       margin-bottom: 24px;
-      letter-spacing: -2px;
-    }
-
-    .hero p {
-      font-size: 32px;
-      color: #FF6B4A;
-      margin-bottom: 32px;
-      font-weight: 600;
     }
 
     .hero .subtitle {
-      font-size: 20px;
+      font-size: 24px;
       color: #666;
-      max-width: 600px;
-      margin: 0 auto 48px;
-      line-height: 1.6;
+      font-weight: 400;
+      margin-bottom: 48px;
+      letter-spacing: -0.5px;
     }
 
-    .btn {
+    .cta-button {
       display: inline-block;
-      padding: 16px 32px;
-      background: #FF6B4A;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
+      padding: 18px 48px;
+      background: #000;
+      color: #fff;
+      border-radius: 2px;
+      font-size: 14px;
       font-weight: 600;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: none;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
       cursor: pointer;
-      font-size: 16px;
+      border: none;
     }
 
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 30px rgba(255, 107, 74, 0.3);
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     }
 
-    /* PROJECTS */
-    .projects {
-      padding: 100px 24px;
-      background: white;
+    /* PROJECTS SECTION */
+    .projects-section {
+      padding: 120px 40px;
+      background: #ffffff;
     }
 
-    .projects h2 {
-      font-size: 56px;
+    .section-header {
+      margin-bottom: 80px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -2px;
       margin-bottom: 16px;
     }
 
-    .projects > .container > p {
+    .section-header p {
       font-size: 18px;
-      color: #888;
-      margin-bottom: 64px;
+      color: #999;
       max-width: 600px;
+      font-weight: 400;
     }
 
-    .project-grid {
+    .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 40px;
+      margin-bottom: 80px;
     }
 
-    .project-card {
+    .project-item {
       cursor: pointer;
-      transition: transform 0.3s;
+      transition: opacity 0.3s ease;
     }
 
-    .project-card:hover {
-      transform: translateY(-8px);
+    .project-item:hover {
+      opacity: 0.7;
     }
 
-    .project-image {
+    .project-visual {
       width: 100%;
       aspect-ratio: 16/9;
-      background: linear-gradient(135deg, rgba(255, 107, 74, 0.2), rgba(230, 57, 70, 0.2));
-      border-radius: 8px;
+      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+      border-radius: 2px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 80px;
-      margin-bottom: 20px;
+      font-size: 60px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .project-card h3 {
+    .project-visual::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,50 Q25,25 50,50 T100,50" stroke="rgba(0,0,0,0.05)" stroke-width="0.5" fill="none"/></svg>');
+      pointer-events: none;
+    }
+
+    .project-info h3 {
       font-size: 24px;
+      font-weight: 700;
       margin-bottom: 8px;
+      letter-spacing: -1px;
     }
 
     .project-meta {
-      font-size: 14px;
-      color: #FF6B4A;
-      font-weight: 600;
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: #999;
       margin-bottom: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    .project-card p {
-      color: #888;
+    .project-description {
       font-size: 16px;
+      color: #666;
+      line-height: 1.7;
     }
 
-    /* ABOUT */
-    .about {
-      padding: 100px 24px;
-      background: #FAFBFC;
-    }
-
-    .about h2 {
-      font-size: 56px;
-      margin-bottom: 64px;
+    /* ABOUT SECTION */
+    .about-section {
+      padding: 120px 40px;
+      background: #f9f9f9;
     }
 
     .about-content {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 60px;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-text {
+      max-width: 500px;
     }
 
     .about-text p {
@@ -192,37 +246,59 @@
       color: #666;
       margin-bottom: 24px;
       line-height: 1.8;
+      font-weight: 400;
     }
 
-    .skills-group {
-      margin-bottom: 32px;
+    .skills-container {
+      margin-top: 60px;
     }
 
-    .skills-group h4 {
-      font-weight: 600;
+    .skill-block {
+      margin-bottom: 48px;
+    }
+
+    .skill-label {
+      font-size: 13px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       margin-bottom: 8px;
+      font-weight: 600;
     }
 
-    .skills-group p {
-      color: #888;
+    .skill-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .skill-items {
       font-size: 16px;
+      color: #666;
+      line-height: 1.8;
     }
 
-    /* CONTACT */
-    .contact {
-      padding: 100px 24px;
-      background: white;
+    /* CONTACT SECTION */
+    .contact-section {
+      padding: 120px 40px;
+      background: #ffffff;
     }
 
-    .contact h2 {
-      font-size: 56px;
+    .contact-header {
       text-align: center;
-      margin-bottom: 64px;
+      margin-bottom: 80px;
+    }
+
+    .contact-header h2 {
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
     }
 
     .contact-form {
-      max-width: 600px;
-      margin: 0 auto 48px;
+      max-width: 500px;
+      margin: 0 auto 60px;
     }
 
     .form-group {
@@ -232,80 +308,78 @@
     .form-group input,
     .form-group textarea {
       width: 100%;
-      padding: 16px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
+      padding: 16px 0;
+      border: none;
+      border-bottom: 1px solid #000;
+      background: transparent;
       font-family: inherit;
       font-size: 16px;
-      transition: border-color 0.2s;
+      font-weight: 400;
+      transition: border-color 0.3s;
     }
 
     .form-group input:focus,
     .form-group textarea:focus {
       outline: none;
-      border-color: #FF6B4A;
+      border-bottom-color: #666;
     }
 
     .form-group textarea {
       resize: vertical;
-      min-height: 150px;
+      min-height: 120px;
+      border-bottom: 1px solid #000;
     }
 
-    .submit-btn {
+    .form-submit {
       width: 100%;
-      padding: 16px;
-      background: #FF6B4A;
-      color: white;
+      padding: 18px;
+      background: #000;
+      color: #fff;
       border: none;
-      border-radius: 8px;
+      border-radius: 2px;
+      font-size: 14px;
       font-weight: 600;
-      font-size: 16px;
+      letter-spacing: 0.5px;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: all 0.3s;
+      text-transform: uppercase;
     }
 
-    .submit-btn:hover {
-      transform: scale(1.02);
+    .form-submit:hover {
+      opacity: 0.8;
     }
 
-    .social-links {
+    .social-section {
       display: flex;
       justify-content: center;
-      gap: 24px;
-      margin-top: 48px;
+      gap: 40px;
+      margin-top: 80px;
     }
 
-    .social-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: rgba(255, 107, 74, 0.1);
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      transition: transform 0.2s;
-      color: #FF6B4A;
-      text-decoration: none;
+    .social-link {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #000;
+      transition: color 0.3s;
     }
 
-    .social-btn:hover {
-      transform: scale(1.1);
+    .social-link:hover {
+      color: #666;
     }
 
     /* FOOTER */
     footer {
-      padding: 32px 24px;
-      border-top: 1px solid #e0e0e0;
+      padding: 60px 40px;
+      border-top: 1px solid #e8e8e8;
       text-align: center;
-      color: #888;
-      font-size: 14px;
+      color: #999;
+      font-size: 13px;
     }
 
     /* ANIMATIONS */
-    @keyframes fadeInUp {
+    @keyframes fadeIn {
       from {
         opacity: 0;
         transform: translateY(30px);
@@ -316,101 +390,172 @@
       }
     }
 
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 48px;
-      }
-
-      .hero p {
-        font-size: 24px;
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
       }
 
       .about-content {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 60px;
       }
 
-      .projects h2,
-      .about h2,
-      .contact h2 {
+      nav ul {
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 24px;
+      }
+
+      header {
+        padding: 16px 24px;
+      }
+
+      nav ul {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      .hero .subtitle {
+        font-size: 18px;
+      }
+
+      .section-header h2 {
         font-size: 40px;
+      }
+
+      .contact-header h2 {
+        font-size: 40px;
+      }
+
+      .projects-grid {
+        gap: 32px;
+      }
+
+      .about-text p {
+        font-size: 16px;
       }
     }
   </style>
 </head>
 <body>
+  <!-- HEADER -->
+  <header>
+    <nav>
+      <div class="logo">Guilherme Prestes</div>
+      <ul>
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <h1>Guilherme Prestes</h1>
-      <p>Motion Designer & Video Editor</p>
+      <h1>Motion Designer</h1>
       <p class="subtitle">Creating bold, experimental animations and visual stories</p>
-      <button class="btn" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">
-        View Projects
+      <button class="cta-button" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">
+        View Work
       </button>
     </div>
   </section>
 
   <!-- PROJECTS -->
-  <section class="projects" id="projects">
+  <section class="projects-section" id="projects">
     <div class="container">
-      <h2>Featured Work</h2>
-      <p>A selection of motion design and video editing projects showcasing creativity and technical skill.</p>
+      <div class="section-header">
+        <h2>Featured Work</h2>
+        <p>A selection of motion design and video editing projects.</p>
+      </div>
 
-      <div class="project-grid">
-        <div class="project-card">
-          <div class="project-image">🎬</div>
-          <h3>Motion Design Reel</h3>
-          <div class="project-meta">Motion Design / 2025</div>
-          <p>A collection of motion design experiments exploring geometric animations and color transitions.</p>
+      <div class="projects-grid">
+        <div class="project-item">
+          <div class="project-visual">🎬</div>
+          <div class="project-info">
+            <h3>Motion Design Reel</h3>
+            <div class="project-meta">
+              <span>Motion Design</span>
+              <span>2025</span>
+            </div>
+            <p class="project-description">A collection of geometric animations exploring color transitions and experimental forms.</p>
+          </div>
         </div>
 
-        <div class="project-card">
-          <div class="project-image">📹</div>
-          <h3>Product Video</h3>
-          <div class="project-meta">Video Editing / 2024</div>
-          <p>High-energy product demonstration video with dynamic cuts and effects.</p>
+        <div class="project-item">
+          <div class="project-visual">📹</div>
+          <div class="project-info">
+            <h3>Product Video</h3>
+            <div class="project-meta">
+              <span>Video Editing</span>
+              <span>2024</span>
+            </div>
+            <p class="project-description">High-energy product demonstration with dynamic cuts and visual effects.</p>
+          </div>
         </div>
 
-        <div class="project-card">
-          <div class="project-image">✨</div>
-          <h3>Brand Animation</h3>
-          <div class="project-meta">Animation / 2024</div>
-          <p>Custom brand animation and motion graphics for digital campaigns.</p>
+        <div class="project-item">
+          <div class="project-visual">✨</div>
+          <div class="project-info">
+            <h3>Brand Animation</h3>
+            <div class="project-meta">
+              <span>Animation</span>
+              <span>2024</span>
+            </div>
+            <p class="project-description">Custom brand animation and motion graphics for digital campaigns.</p>
+          </div>
         </div>
 
-        <div class="project-card">
-          <div class="project-image">🌈</div>
-          <h3>Experimental Visuals</h3>
-          <div class="project-meta">Motion Design / 2024</div>
-          <p>Avant-garde visual experiments pushing the boundaries of digital motion.</p>
+        <div class="project-item">
+          <div class="project-visual">🌈</div>
+          <div class="project-info">
+            <h3>Experimental Visuals</h3>
+            <div class="project-meta">
+              <span>Motion Design</span>
+              <span>2024</span>
+            </div>
+            <p class="project-description">Avant-garde visual experiments pushing the boundaries of digital motion.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section class="about">
+  <section class="about-section" id="about">
     <div class="container">
-      <h2>About</h2>
       <div class="about-content">
         <div class="about-text">
+          <h2 style="font-size: 48px; font-weight: 900; margin-bottom: 32px; letter-spacing: -2px;">About</h2>
           <p>I'm a motion designer and video editor specializing in creating bold, experimental animations. My work combines creative direction with technical precision to tell compelling visual stories.</p>
           <p>With expertise in motion design, video editing, and animation, I help brands and creators bring their visions to life through dynamic visual content.</p>
         </div>
-        <div>
-          <h3>Skills & Tools</h3>
-          <div class="skills-group">
-            <h4>Motion Design</h4>
-            <p>After Effects, Cinema 4D, Blender</p>
+
+        <div class="skills-container">
+          <div class="skill-block">
+            <div class="skill-label">Motion Design</div>
+            <div class="skill-name">Tools</div>
+            <div class="skill-items">After Effects<br>Cinema 4D<br>Blender</div>
           </div>
-          <div class="skills-group">
-            <h4>Video Editing</h4>
-            <p>Premiere Pro, Final Cut Pro, DaVinci Resolve</p>
+
+          <div class="skill-block">
+            <div class="skill-label">Video Editing</div>
+            <div class="skill-name">Tools</div>
+            <div class="skill-items">Premiere Pro<br>Final Cut Pro<br>DaVinci Resolve</div>
           </div>
-          <div class="skills-group">
-            <h4>Design</h4>
-            <p>Figma, Photoshop, Illustrator</p>
+
+          <div class="skill-block">
+            <div class="skill-label">Design</div>
+            <div class="skill-name">Tools</div>
+            <div class="skill-items">Figma<br>Photoshop<br>Illustrator</div>
           </div>
         </div>
       </div>
@@ -418,28 +563,30 @@
   </section>
 
   <!-- CONTACT -->
-  <section class="contact">
+  <section class="contact-section" id="contact">
     <div class="container">
-      <h2>Let's Create Something Amazing</h2>
+      <div class="contact-header">
+        <h2>Let's work together</h2>
+      </div>
 
       <form class="contact-form" onsubmit="handleSubmit(event)">
         <div class="form-group">
-          <input type="text" placeholder="Your name" required>
+          <input type="text" placeholder="Name" required>
         </div>
         <div class="form-group">
-          <input type="email" placeholder="Your email" required>
+          <input type="email" placeholder="Email" required>
         </div>
         <div class="form-group">
-          <textarea placeholder="Tell me about your project..." required></textarea>
+          <textarea placeholder="Message" required></textarea>
         </div>
-        <button type="submit" class="submit-btn">Send Message</button>
+        <button type="submit" class="form-submit">Send Message</button>
       </form>
 
-      <div class="social-links">
-        <a href="https://github.com/cohl" class="social-btn" target="_blank">🐙</a>
-        <a href="https://linkedin.com" class="social-btn" target="_blank">💼</a>
-        <a href="https://instagram.com" class="social-btn" target="_blank">📷</a>
-        <a href="mailto:prestes.g@gmail.com" class="social-btn">✉️</a>
+      <div class="social-section">
+        <a href="https://github.com/cohl" class="social-link" target="_blank">GitHub</a>
+        <a href="https://linkedin.com" class="social-link" target="_blank">LinkedIn</a>
+        <a href="https://instagram.com" class="social-link" target="_blank">Instagram</a>
+        <a href="mailto:prestes.g@gmail.com" class="social-link">Email</a>
       </div>
     </div>
   </section>
@@ -455,6 +602,16 @@
       alert('Obrigado! Entraremos em contato em breve.');
       event.target.reset();
     }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
   </script>
 </body>
 </html>

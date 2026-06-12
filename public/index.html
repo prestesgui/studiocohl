@@ -71,59 +71,134 @@
       transition: opacity 0.3s;
     }
 
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 40px 60px;
+    /* HERO VIDEO */
+    .hero-video-container {
+      width: 100%;
+      height: 100vh;
       position: relative;
+      overflow: hidden;
+      margin-top: 80px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 100px;
+      background: #000;
     }
 
-    .hero::before {
-      content: '';
+    .video-wrapper {
+      width: 95%;
+      height: 90%;
+      max-width: 1200px;
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      filter: grayscale(100%) contrast(1.1);
+      transition: filter 0.5s ease;
+    }
+
+    .video-wrapper.playing {
+      filter: none;
+    }
+
+    .video-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .video-overlay {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 800"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%%" style="stop-color:rgba(0,0,0,0.02);stop-opacity:1" /><stop offset="100%%" style="stop-color:rgba(0,0,0,0.05);stop-opacity:1" /></linearGradient></defs><rect width="1440" height="800" fill="url(%23grad)"/></svg>');
+      background: 
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.15),
+          rgba(0, 0, 0, 0.15) 1px,
+          transparent 1px,
+          transparent 2px
+        );
       pointer-events: none;
-      z-index: 0;
+      z-index: 10;
+      opacity: 0.5;
+      animation: scanlines 8s linear infinite;
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 900px;
-      animation: fadeIn 1s ease-out;
+    .video-wrapper.playing .video-overlay {
+      opacity: 0;
     }
 
-    .hero h1 {
-      font-size: clamp(60px, 12vw, 120px);
+    @keyframes scanlines {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(10px); }
+    }
+
+    /* PROFILE SECTION */
+    .profile-section {
+      padding: 80px 40px;
+      background: #ffffff;
+      text-align: center;
+      border-top: 1px solid #e8e8e8;
+    }
+
+    .profile-content {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .profile-photo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 70px;
+      margin: 0 auto 32px;
+      overflow: hidden;
+      border: 3px solid #f0f0f0;
+    }
+
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-name {
+      font-size: 32px;
       font-weight: 900;
-      line-height: 1;
-      letter-spacing: -3px;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
     }
 
-    .hero .subtitle {
-      font-size: 24px;
+    .profile-title {
+      font-size: 16px;
+      color: #999;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .profile-email {
+      font-size: 15px;
       color: #666;
-      font-weight: 400;
-      margin-bottom: 48px;
-      letter-spacing: -0.5px;
+      margin-bottom: 32px;
     }
 
-    .cta-button {
+    .profile-cta {
       display: inline-block;
-      padding: 18px 48px;
+      padding: 14px 40px;
       background: #000;
       color: #fff;
-      border-radius: 2px;
-      font-size: 14px;
+      border-radius: 4px;
+      font-size: 13px;
       font-weight: 600;
       letter-spacing: 0.5px;
       transition: all 0.3s ease;
@@ -131,9 +206,9 @@
       border: none;
     }
 
-    .cta-button:hover {
+    .profile-cta:hover {
       transform: translateY(-2px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
 
     /* PROJECTS SECTION */
@@ -181,7 +256,7 @@
       width: 100%;
       aspect-ratio: 16/9;
       background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-      border-radius: 2px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -189,15 +264,6 @@
       margin-bottom: 24px;
       position: relative;
       overflow: hidden;
-    }
-
-    .project-visual::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,50 Q25,25 50,50 T100,50" stroke="rgba(0,0,0,0.05)" stroke-width="0.5" fill="none"/></svg>');
-      pointer-events: none;
     }
 
     .project-info h3 {
@@ -235,10 +301,6 @@
       grid-template-columns: 1fr 1fr;
       gap: 80px;
       align-items: start;
-    }
-
-    .about-text {
-      max-width: 500px;
     }
 
     .about-text p {
@@ -327,7 +389,6 @@
     .form-group textarea {
       resize: vertical;
       min-height: 120px;
-      border-bottom: 1px solid #000;
     }
 
     .form-submit {
@@ -336,7 +397,7 @@
       background: #000;
       color: #fff;
       border: none;
-      border-radius: 2px;
+      border-radius: 4px;
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.5px;
@@ -378,69 +439,33 @@
       font-size: 13px;
     }
 
-    /* ANIMATIONS */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     /* RESPONSIVE */
-    @media (max-width: 1024px) {
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .about-content {
-        grid-template-columns: 1fr;
-        gap: 60px;
-      }
-
-      nav ul {
-        gap: 32px;
-      }
-    }
-
     @media (max-width: 768px) {
-      .container {
-        padding: 0 24px;
+      header { padding: 16px 24px; }
+      nav ul { display: none; }
+      
+      .hero-video-container {
+        height: 60vh;
+        padding-bottom: 40px;
+      }
+      
+      .video-wrapper {
+        border-radius: 12px;
       }
 
-      header {
-        padding: 16px 24px;
-      }
-
-      nav ul {
-        display: none;
-      }
-
-      .hero h1 {
-        font-size: 48px;
-      }
-
-      .hero .subtitle {
-        font-size: 18px;
-      }
-
-      .section-header h2 {
-        font-size: 40px;
-      }
-
+      .section-header h2,
       .contact-header h2 {
         font-size: 40px;
       }
 
       .projects-grid {
+        grid-template-columns: 1fr;
         gap: 32px;
       }
 
-      .about-text p {
-        font-size: 16px;
+      .about-content {
+        grid-template-columns: 1fr;
+        gap: 60px;
       }
     }
   </style>
@@ -458,14 +483,27 @@
     </nav>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Motion Designer</h1>
-      <p class="subtitle">Creating bold, experimental animations and visual stories</p>
-      <button class="cta-button" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">
-        View Work
-      </button>
+  <!-- HERO VIDEO -->
+  <section class="hero-video-container">
+    <div class="video-wrapper" id="videoWrapper">
+      <div class="video-overlay"></div>
+      <iframe 
+        id="youtubeVideo"
+        src="https://www.youtube.com/embed/NjgBbPhE2tk?autoplay=0&controls=1&modestbranding=1&fs=1" 
+        allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- PROFILE -->
+  <section class="profile-section">
+    <div class="profile-content">
+      <div class="profile-photo">👤</div>
+      <div class="profile-name">Guilherme Prestes</div>
+      <div class="profile-title">Motion Designer & Video Editor</div>
+      <div class="profile-email">prestes.g@gmail.com</div>
+      <a href="#projects" class="profile-cta">View My Work</a>
     </div>
   </section>
 
@@ -603,13 +641,24 @@
       event.target.reset();
     }
 
+    const videoWrapper = document.getElementById('videoWrapper');
+    const youtubeVideo = document.getElementById('youtubeVideo');
+
+    // Detect when video is being interacted with
+    youtubeVideo.addEventListener('mouseenter', function() {
+      setTimeout(() => videoWrapper.classList.add('playing'), 500);
+    });
+
+    youtubeVideo.addEventListener('click', function() {
+      setTimeout(() => videoWrapper.classList.add('playing'), 300);
+    });
+
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
       });
     });
   </script>

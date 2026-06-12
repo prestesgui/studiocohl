@@ -1,7 +1,7 @@
 {
   "name": "guilherme-prestes-portfolio",
   "version": "1.0.0",
-  "description": "Motion Designer Portfolio",
+  "description": "Video editor/Motion Designer Portfolio",
   "private": true,
   "scripts": {
     "start": "http-server",

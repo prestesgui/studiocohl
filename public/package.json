@@ -1,0 +1,10 @@
+{
+  "name": "guilherme-prestes-portfolio",
+  "version": "1.0.0",
+  "description": "Motion Designer Portfolio",
+  "private": true,
+  "scripts": {
+    "start": "http-server",
+    "build": "echo 'build complete'"
+  }
+}

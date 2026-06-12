@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guilherme Prestes - Motion Designer</title>
+  <meta name="description" content="Motion Designer & Video Editor">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: #FAFBFC;
+      color: #0A0A0A;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: rgba(255, 107, 74, 0.1);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -50%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: rgba(230, 57, 70, 0.1);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1s ease;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 800;
+      margin-bottom: 24px;
+      letter-spacing: -2px;
+    }
+
+    .hero p {
+      font-size: 32px;
+      color: #FF6B4A;
+      margin-bottom: 32px;
+      font-weight: 600;
+    }
+
+    .hero .subtitle {
+      font-size: 20px;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 16px 32px;
+      background: #FF6B4A;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(255, 107, 74, 0.3);
+    }
+
+    /* PROJECTS */
+    .projects {
+      padding: 100px 24px;
+      background: white;
+    }
+
+    .projects h2 {
+      font-size: 56px;
+      margin-bottom: 16px;
+    }
+
+    .projects > .container > p {
+      font-size: 18px;
+      color: #888;
+      margin-bottom: 64px;
+      max-width: 600px;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+    }
+
+    .project-card {
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .project-image {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, rgba(255, 107, 74, 0.2), rgba(230, 57, 70, 0.2));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
+
+    .project-card h3 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .project-meta {
+      font-size: 14px;
+      color: #FF6B4A;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .project-card p {
+      color: #888;
+      font-size: 16px;
+    }
+
+    /* ABOUT */
+    .about {
+      padding: 100px 24px;
+      background: #FAFBFC;
+    }
+
+    .about h2 {
+      font-size: 56px;
+      margin-bottom: 64px;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+
+    .about-text p {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 24px;
+      line-height: 1.8;
+    }
+
+    .skills-group {
+      margin-bottom: 32px;
+    }
+
+    .skills-group h4 {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .skills-group p {
+      color: #888;
+      font-size: 16px;
+    }
+
+    /* CONTACT */
+    .contact {
+      padding: 100px 24px;
+      background: white;
+    }
+
+    .contact h2 {
+      font-size: 56px;
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto 48px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 16px;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #FF6B4A;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: #FF6B4A;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .submit-btn:hover {
+      transform: scale(1.02);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .social-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 107, 74, 0.1);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: transform 0.2s;
+      color: #FF6B4A;
+      text-decoration: none;
+    }
+
+    .social-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 32px 24px;
+      border-top: 1px solid #e0e0e0;
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      .hero p {
+        font-size: 24px;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .projects h2,
+      .about h2,
+      .contact h2 {
+        font-size: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Guilherme Prestes</h1>
+      <p>Motion Designer & Video Editor</p>
+      <p class="subtitle">Creating bold, experimental animations and visual stories</p>
+      <button class="btn" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">
+        View Projects
+      </button>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <h2>Featured Work</h2>
+      <p>A selection of motion design and video editing projects showcasing creativity and technical skill.</p>
+
+      <div class="project-grid">
+        <div class="project-card">
+          <div class="project-image">🎬</div>
+          <h3>Motion Design Reel</h3>
+          <div class="project-meta">Motion Design / 2025</div>
+          <p>A collection of motion design experiments exploring geometric animations and color transitions.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image">📹</div>
+          <h3>Product Video</h3>
+          <div class="project-meta">Video Editing / 2024</div>
+          <p>High-energy product demonstration video with dynamic cuts and effects.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image">✨</div>
+          <h3>Brand Animation</h3>
+          <div class="project-meta">Animation / 2024</div>
+          <p>Custom brand animation and motion graphics for digital campaigns.</p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image">🌈</div>
+          <h3>Experimental Visuals</h3>
+          <div class="project-meta">Motion Design / 2024</div>
+          <p>Avant-garde visual experiments pushing the boundaries of digital motion.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <div class="container">
+      <h2>About</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>I'm a motion designer and video editor specializing in creating bold, experimental animations. My work combines creative direction with technical precision to tell compelling visual stories.</p>
+          <p>With expertise in motion design, video editing, and animation, I help brands and creators bring their visions to life through dynamic visual content.</p>
+        </div>
+        <div>
+          <h3>Skills & Tools</h3>
+          <div class="skills-group">
+            <h4>Motion Design</h4>
+            <p>After Effects, Cinema 4D, Blender</p>
+          </div>
+          <div class="skills-group">
+            <h4>Video Editing</h4>
+            <p>Premiere Pro, Final Cut Pro, DaVinci Resolve</p>
+          </div>
+          <div class="skills-group">
+            <h4>Design</h4>
+            <p>Figma, Photoshop, Illustrator</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact">
+    <div class="container">
+      <h2>Let's Create Something Amazing</h2>
+
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <input type="text" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="Your email" required>
+        </div>
+        <div class="form-group">
+          <textarea placeholder="Tell me about your project..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+
+      <div class="social-links">
+        <a href="https://github.com/cohl" class="social-btn" target="_blank">🐙</a>
+        <a href="https://linkedin.com" class="social-btn" target="_blank">💼</a>
+        <a href="https://instagram.com" class="social-btn" target="_blank">📷</a>
+        <a href="mailto:prestes.g@gmail.com" class="social-btn">✉️</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Guilherme Prestes. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault();
+      alert('Obrigado! Entraremos em contato em breve.');
+      event.target.reset();
+    }
+  </script>
+</body>
+</html>

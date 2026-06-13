@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guilherme Prestes • Motion Designer</title>
-  <meta name="description" content="Motion Designer & Video Editor • Bold, experimental animations">
+  <title>Guilherme Prestes • Video Editor & Motion Designer</title>
   <style>
     * {
       margin: 0;
@@ -12,26 +11,16 @@
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
+    html, body {
+      width: 100%;
+      height: 100%;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
       background: #ffffff;
       color: #000;
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 40px;
+      overflow-x: hidden;
     }
 
     /* HEADER */
@@ -41,747 +30,530 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      padding: 24px 40px;
-    }
-
-    nav {
-      max-width: 1400px;
-      margin: 0 auto;
+      height: 72px;
+      background: #ffffff;
+      border-bottom: 1px solid #e8e8e8;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
     }
 
-    .logo {
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
+    .header-logo {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
     nav ul {
       display: flex;
       list-style: none;
-      gap: 48px;
-      font-size: 13px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      gap: 60px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     nav a {
-      transition: opacity 0.3s ease;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: #000;
       opacity: 0.7;
+      transition: opacity 0.3s ease;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
     nav a:hover {
       opacity: 1;
     }
 
+    .header-contact {
+      display: none;
+    }
+
     /* HERO SECTION */
-    .hero-section {
+    .hero {
+      position: relative;
       width: 100%;
-      min-height: 120vh;
+      height: calc(100vh - 72px);
+      margin-top: 72px;
+      padding: 12px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 100px 40px 60px;
-      background: #ffffff;
-      position: relative;
-      margin-top: 80px;
+      justify-content: space-between;
     }
 
-    .video-wrapper {
-      width: 100%;
-      max-width: 1300px;
-      aspect-ratio: 16/9;
-      position: relative;
-      border-radius: 20px;
+    .hero-video-container {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      bottom: 0;
+      border-radius: 24px;
       overflow: hidden;
-      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.12);
+      z-index: 0;
     }
 
-    .video-wrapper.grayscale {
-      filter: grayscale(100%) blur(3px) contrast(1.1);
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(120%) brightness(45%);
+      display: block;
     }
 
-    .video-wrapper.grayscale::before {
+    /* Dark overlay */
+    .hero-video-container::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2" /></filter><rect width="100" height="100" fill="%23000" filter="url(%23noise)" opacity="0.06"/></svg>');
-      background-repeat: repeat;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.25);
+      z-index: 2;
       pointer-events: none;
+    }
+
+    /* Grain/Noise Animation */
+    .hero-video-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2" /></filter><rect width="100" height="100" fill="%23000" filter="url(%23noise)" opacity="0.05"/></svg>');
+      background-repeat: repeat;
+      z-index: 3;
+      pointer-events: none;
+      animation: grain 0.15s infinite;
+    }
+
+    @keyframes grain {
+      0%, 100% { transform: translate(0, 0); }
+      10% { transform: translate(-2px, -2px); }
+      20% { transform: translate(2px, 2px); }
+      30% { transform: translate(-1px, 1px); }
+      40% { transform: translate(1px, -1px); }
+      50% { transform: translate(0, 0); }
+      60% { transform: translate(2px, -2px); }
+      70% { transform: translate(-2px, 1px); }
+      80% { transform: translate(1px, 2px); }
+      90% { transform: translate(-1px, -1px); }
+    }
+
+    /* Content */
+    .hero-content {
+      position: relative;
       z-index: 10;
-      animation: noise-flicker 0.15s infinite;
-    }
-
-    .video-wrapper.grayscale.playing::before {
-      display: none;
-    }
-
-    @keyframes noise-flicker {
-      0%, 100% { opacity: 0.04; }
-      50% { opacity: 0.06; }
-    }
-
-    .video-wrapper iframe {
       width: 100%;
       height: 100%;
-      border: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: 80px;
+      padding-left: 60px;
+      padding-right: 60px;
+      pointer-events: none;
     }
 
-    /* PHOTO OVERLAY */
-    .photo-overlay {
+    .hero-text-left {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+    .hero-title {
+      font-size: clamp(110px, 15vw, 280px);
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 0.9;
+      letter-spacing: -4px;
+      max-width: 90%;
+    }
+
+    .hero-text-right {
       position: absolute;
       top: 50%;
       right: 60px;
       transform: translateY(-50%);
-      z-index: 100;
-      width: 280px;
-      height: 280px;
-      border-radius: 12px;
-      overflow: hidden;
-      background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 120px;
-      border: 2px solid rgba(0, 0, 0, 0.1);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-align: right;
     }
 
-    .photo-overlay img {
+    .hero-services {
+      font-size: clamp(14px, 2vw, 20px);
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 1.6;
+      opacity: 0.9;
+      letter-spacing: 0.5px;
+    }
+
+    /* Floating Card */
+    .floating-card {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      z-index: 20;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      pointer-events: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .floating-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #f0f0f0;
+    }
+
+    .card-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .photo-overlay.hidden {
-      opacity: 0;
-      transform: translateY(-50%) translateX(150%);
-      pointer-events: none;
-    }
-
-    /* PLAY BUTTON */
-    .play-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 90;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .play-button.clicked {
-      animation: playPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    }
-
-    .play-icon {
-      width: 110px;
-      height: 110px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 50%;
+    .card-content {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 60px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .play-button:hover .play-icon {
-      transform: scale(1.15);
-      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.25);
-    }
-
-    .play-icon svg {
-      width: 55px;
-      height: 55px;
-      fill: #000;
-      margin-left: 5px;
-    }
-
-    @keyframes playPop {
-      0% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(4);
-        opacity: 0;
-      }
-    }
-
-    /* FADE ON SCROLL */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* PROJECTS SECTION */
-    .projects-section {
-      padding: 160px 40px;
-      background: #ffffff;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-    }
-
-    .section-header {
-      margin-bottom: 100px;
-    }
-
-    .section-header h2 {
-      font-size: clamp(48px, 10vw, 90px);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -3px;
-      margin-bottom: 24px;
-      color: #000;
-    }
-
-    .section-header p {
-      font-size: 18px;
-      color: #666;
-      max-width: 700px;
-      font-weight: 400;
-      line-height: 1.8;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 50px;
-    }
-
-    .project-item {
-      cursor: pointer;
-      transition: all 0.4s ease;
-    }
-
-    .project-item:hover {
-      transform: translateY(-8px);
-    }
-
-    .project-visual {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 70px;
-      margin-bottom: 32px;
-      overflow: hidden;
-      transition: all 0.4s ease;
-    }
-
-    .project-item:hover .project-visual {
-      border-color: rgba(0, 0, 0, 0.15);
-      background: linear-gradient(135deg, #ececec 0%, #dcdcdc 100%);
-    }
-
-    .project-info h3 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      letter-spacing: -1px;
-      color: #000;
-    }
-
-    .project-meta {
-      display: flex;
-      gap: 20px;
-      font-size: 13px;
-      color: #999;
-      margin-bottom: 16px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-    }
-
-    .project-description {
-      font-size: 16px;
-      color: #666;
-      line-height: 1.8;
-      font-weight: 400;
-    }
-
-    /* ABOUT SECTION */
-    .about-section {
-      padding: 160px 40px;
-      background: #ffffff;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-    }
-
-    .about-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 120px;
-      align-items: start;
-    }
-
-    .about-text h2 {
-      font-size: clamp(40px, 8vw, 70px);
-      font-weight: 900;
-      margin-bottom: 40px;
-      letter-spacing: -2px;
-      color: #000;
-    }
-
-    .about-text p {
-      font-size: 18px;
-      color: #666;
-      margin-bottom: 28px;
-      line-height: 1.9;
-      font-weight: 400;
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      margin-top: 60px;
-    }
-
-    .skill-card {
-      background: rgba(0, 0, 0, 0.02);
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: 12px;
-      padding: 32px;
-      transition: all 0.4s ease;
-    }
-
-    .skill-card:hover {
-      background: rgba(0, 0, 0, 0.04);
-      border-color: rgba(0, 0, 0, 0.15);
-      transform: translateY(-4px);
-    }
-
-    .skill-label {
+    .card-role {
       font-size: 12px;
       color: #999;
+      font-weight: 500;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 12px;
-      font-weight: 600;
     }
 
-    .skill-name {
+    .card-name {
       font-size: 18px;
       font-weight: 700;
-      margin-bottom: 16px;
-      letter-spacing: -0.5px;
       color: #000;
+      line-height: 1;
     }
 
-    .skill-items {
-      font-size: 15px;
-      color: #666;
-      line-height: 1.8;
-      font-weight: 400;
-    }
-
-    /* CONTACT SECTION */
-    .contact-section {
-      padding: 160px 40px;
-      background: #ffffff;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-    }
-
-    .contact-wrapper {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .contact-header h2 {
-      font-size: clamp(40px, 10vw, 80px);
-      font-weight: 900;
-      text-align: center;
-      margin-bottom: 60px;
-      letter-spacing: -2px;
-      color: #000;
-    }
-
-    .contact-form {
-      margin-bottom: 60px;
-    }
-
-    .form-group {
-      margin-bottom: 32px;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 16px 0;
-      border: none;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      background: transparent;
-      font-family: inherit;
-      font-size: 16px;
-      color: #000;
-      transition: border-color 0.3s ease;
-    }
-
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: #999;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-bottom-color: rgba(0, 0, 0, 0.6);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
-
-    .form-submit {
-      width: 100%;
-      padding: 16px;
+    .card-button {
+      margin-top: 8px;
+      padding: 10px 24px;
       background: #000;
       color: #fff;
-      border: 1px solid #000;
-      border-radius: 6px;
-      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
       font-weight: 600;
-      letter-spacing: 1px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
+      transition: all 0.3s ease;
     }
 
-    .form-submit:hover {
+    .card-button:hover {
       background: #333;
-      border-color: #333;
-      transform: translateY(-2px);
+      transform: scale(1.05);
     }
 
-    .social-section {
-      display: flex;
-      justify-content: center;
-      gap: 50px;
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
     }
 
-    .social-link {
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #000;
-      opacity: 0.7;
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: #000;
       transition: all 0.3s ease;
     }
 
-    .social-link:hover {
-      opacity: 1;
-      transform: translateY(-2px);
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
     }
 
-    /* FOOTER */
-    footer {
-      padding: 60px 40px;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-      text-align: center;
-      color: #999;
-      font-size: 13px;
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
       background: #ffffff;
+      border-bottom: 1px solid #e8e8e8;
+      flex-direction: column;
+      gap: 20px;
+      padding: 40px;
+      z-index: 999;
+      animation: slideDown 0.3s ease;
     }
 
-    /* RESPONSIVE */
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .mobile-menu a {
+      font-size: 16px;
+      font-weight: 500;
+      color: #000;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* TABLET */
     @media (max-width: 1024px) {
-      .projects-grid,
-      .skills-grid {
-        grid-template-columns: 1fr;
+      header {
+        padding: 0 24px;
       }
 
-      .about-content {
-        grid-template-columns: 1fr;
-        gap: 60px;
+      .hero-content {
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-top: 60px;
       }
 
-      .photo-overlay {
-        width: 220px;
-        height: 220px;
-        font-size: 80px;
+      .hero-title {
+        font-size: clamp(80px, 12vw, 200px);
+      }
+
+      .hero-text-right {
         right: 40px;
       }
 
-      nav ul {
-        gap: 32px;
+      .floating-card {
+        bottom: 30px;
+        right: 30px;
+        padding: 20px;
+        gap: 16px;
+      }
+
+      .card-image {
+        width: 70px;
+        height: 70px;
+      }
+
+      .card-name {
+        font-size: 16px;
       }
     }
 
+    /* MOBILE */
     @media (max-width: 768px) {
-      header { padding: 16px 24px; }
-      nav ul { display: none; }
-      
-      .section-header h2,
-      .contact-header h2 {
-        font-size: 36px;
+      header {
+        padding: 0 20px;
       }
 
-      .photo-overlay {
-        width: 180px;
-        height: 180px;
-        font-size: 60px;
-        right: 20px;
+      nav ul {
+        display: none;
       }
 
-      .projects-section,
-      .about-section,
-      .contact-section {
-        padding: 100px 24px;
+      .hamburger {
+        display: flex;
       }
 
-      .social-section {
+      .hero {
+        padding: 8px;
+      }
+
+      .hero-video-container {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        border-radius: 16px;
+      }
+
+      .hero-content {
+        padding-left: 24px;
+        padding-right: 24px;
+        padding-top: 40px;
+      }
+
+      .hero-title {
+        font-size: clamp(48px, 10vw, 140px);
+        max-width: 100%;
+      }
+
+      .hero-text-right {
+        position: static;
+        transform: none;
+        text-align: left;
+        margin-top: 40px;
+      }
+
+      .hero-services {
+        font-size: 14px;
+      }
+
+      .floating-card {
+        position: static;
+        margin-top: 40px;
+        width: fit-content;
+      }
+
+      .mobile-menu {
+        padding: 30px 20px;
+      }
+
+      .mobile-menu a {
+        font-size: 14px;
+      }
+    }
+
+    /* EXTRA SMALL */
+    @media (max-width: 480px) {
+      .hero-content {
+        padding-top: 30px;
+      }
+
+      .hero-title {
+        font-size: clamp(36px, 8vw, 100px);
+      }
+
+      .floating-card {
         flex-direction: column;
-        gap: 24px;
+        text-align: center;
+        padding: 16px;
+      }
+
+      .card-image {
+        width: 64px;
+        height: 64px;
+      }
+
+      .card-role {
+        font-size: 11px;
+      }
+
+      .card-name {
+        font-size: 14px;
+      }
+
+      .card-button {
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
+
   <!-- HEADER -->
   <header>
+    <div class="header-logo">Guilherme Prestes</div>
+    
     <nav>
-      <div class="logo">Guilherme Prestes</div>
       <ul>
-        <li><a href="#projects">Work</a></li>
+        <li><a href="#work">Work</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
+
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </header>
 
+  <!-- MOBILE MENU -->
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
   <!-- HERO SECTION -->
-  <section class="hero-section">
-    <div class="video-wrapper grayscale" id="videoWrapper">
-      <div class="play-button" id="playButton">
-        <div class="play-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </div>
-      </div>
-      
-      <div class="photo-overlay" id="photoOverlay">📷</div>
-
-      <iframe 
-        id="youtubeVideo"
-        src="https://www.youtube.com/embed/NjgBbPhE2tk?autoplay=1&controls=1&modestbranding=1&rel=0&fs=1&loop=1&playlist=NjgBbPhE2tk"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+  <section class="hero">
+    <!-- Video Background -->
+    <div class="hero-video-container">
+      <video autoplay muted loop playsinline>
+        <source src="assets/showreel.mp4" type="video/mp4">
+      </video>
     </div>
-  </section>
 
-  <!-- PROJECTS -->
-  <section class="projects-section" id="projects">
-    <div class="container">
-      <div class="section-header fade-in">
-        <h2>Featured Work</h2>
-        <p>A selection of motion design and video editing projects showcasing creativity and technical excellence.</p>
+    <!-- Content -->
+    <div class="hero-content">
+      <div class="hero-text-left">
+        <h1 class="hero-title">Guilherme Prestes</h1>
       </div>
 
-      <div class="projects-grid">
-        <div class="project-item fade-in">
-          <div class="project-visual">🎬</div>
-          <div class="project-info">
-            <h3>Motion Design Reel</h3>
-            <div class="project-meta">
-              <span>Motion Design</span>
-              <span>2025</span>
-            </div>
-            <p class="project-description">A collection of geometric animations exploring color transitions and experimental forms.</p>
-          </div>
-        </div>
-
-        <div class="project-item fade-in">
-          <div class="project-visual">📹</div>
-          <div class="project-info">
-            <h3>Product Video</h3>
-            <div class="project-meta">
-              <span>Video Editing</span>
-              <span>2024</span>
-            </div>
-            <p class="project-description">High-energy product demonstration with dynamic cuts and visual effects.</p>
-          </div>
-        </div>
-
-        <div class="project-item fade-in">
-          <div class="project-visual">✨</div>
-          <div class="project-info">
-            <h3>Brand Animation</h3>
-            <div class="project-meta">
-              <span>Animation</span>
-              <span>2024</span>
-            </div>
-            <p class="project-description">Custom brand animation and motion graphics for digital campaigns.</p>
-          </div>
-        </div>
-
-        <div class="project-item fade-in">
-          <div class="project-visual">🌈</div>
-          <div class="project-info">
-            <h3>Experimental Visuals</h3>
-            <div class="project-meta">
-              <span>Motion Design</span>
-              <span>2024</span>
-            </div>
-            <p class="project-description">Avant-garde visual experiments pushing the boundaries of digital motion.</p>
-          </div>
+      <div class="hero-text-right">
+        <div class="hero-services">
+          Video Editor<br>Motion Designer
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ABOUT -->
-  <section class="about-section" id="about">
-    <div class="container">
-      <div class="about-content">
-        <div class="fade-in">
-          <h2>About</h2>
-          <p>I'm a motion designer and video editor specializing in creating bold, experimental animations. My work combines creative direction with technical precision to tell compelling visual stories.</p>
-          <p>With expertise in motion design, video editing, and animation, I help brands and creators bring their visions to life through dynamic visual content.</p>
-        </div>
-
-        <div>
-          <div class="skills-grid">
-            <div class="skill-card fade-in">
-              <div class="skill-label">Motion Design</div>
-              <div class="skill-name">Tools</div>
-              <div class="skill-items">After Effects<br>Cinema 4D<br>Blender</div>
-            </div>
-
-            <div class="skill-card fade-in">
-              <div class="skill-label">Video Editing</div>
-              <div class="skill-name">Tools</div>
-              <div class="skill-items">Premiere Pro<br>Final Cut Pro<br>DaVinci Resolve</div>
-            </div>
-
-            <div class="skill-card fade-in">
-              <div class="skill-label">Design</div>
-              <div class="skill-name">Tools</div>
-              <div class="skill-items">Figma<br>Photoshop<br>Illustrator</div>
-            </div>
-
-            <div class="skill-card fade-in">
-              <div class="skill-label">Development</div>
-              <div class="skill-name">Web</div>
-              <div class="skill-items">HTML/CSS<br>JavaScript<br>React</div>
-            </div>
-          </div>
-        </div>
+    <!-- Floating Card -->
+    <div class="floating-card">
+      <div class="card-image">
+        <img src="assets/profile.jpg" alt="Guilherme Prestes">
+      </div>
+      <div class="card-content">
+        <div class="card-role">Video Editor / Motion Designer</div>
+        <div class="card-name">Guilherme Prestes</div>
+        <button class="card-button">Let's Talk</button>
       </div>
     </div>
   </section>
-
-  <!-- CONTACT -->
-  <section class="contact-section" id="contact">
-    <div class="container">
-      <div class="contact-wrapper fade-in">
-        <div class="contact-header">
-          <h2>Let's Work Together</h2>
-        </div>
-
-        <form class="contact-form" onsubmit="handleSubmit(event)">
-          <div class="form-group">
-            <input type="text" placeholder="Your name" required>
-          </div>
-          <div class="form-group">
-            <input type="email" placeholder="Your email" required>
-          </div>
-          <div class="form-group">
-            <textarea placeholder="Tell me about your project..." required></textarea>
-          </div>
-          <button type="submit" class="form-submit">Send Message</button>
-        </form>
-
-        <div class="social-section">
-          <a href="https://github.com/cohl" class="social-link" target="_blank">GitHub</a>
-          <a href="https://linkedin.com" class="social-link" target="_blank">LinkedIn</a>
-          <a href="https://instagram.com" class="social-link" target="_blank">Instagram</a>
-          <a href="mailto:prestes.g@gmail.com" class="social-link">Email</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2025 Guilherme Prestes. All rights reserved.</p>
-  </footer>
 
   <script>
-    const playButton = document.getElementById('playButton');
-    const videoWrapper = document.getElementById('videoWrapper');
-    const photoOverlay = document.getElementById('photoOverlay');
-    let isPlaying = false;
+    // Mobile Menu Toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
 
-    playButton.addEventListener('click', function() {
-      if (!isPlaying) {
-        isPlaying = true;
-        playButton.classList.add('clicked');
-        
-        setTimeout(() => {
-          videoWrapper.classList.remove('grayscale');
-          photoOverlay.classList.add('hidden');
-        }, 200);
-      }
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
     });
 
-    // Scroll animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-in').forEach(el => {
-      observer.observe(el);
-    });
-
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
+    // Close menu when clicking on a link
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
       });
     });
-
-    function handleSubmit(event) {
-      event.preventDefault();
-      alert('Obrigado! Entraremos em contato em breve.');
-      event.target.reset();
-    }
   </script>
+
 </body>
 </html>

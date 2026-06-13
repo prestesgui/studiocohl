@@ -70,10 +70,6 @@
       opacity: 1;
     }
 
-    .header-contact {
-      display: none;
-    }
-
     /* HERO SECTION */
     .hero {
       position: relative;
@@ -95,6 +91,7 @@
       border-radius: 24px;
       overflow: hidden;
       z-index: 0;
+      background: #000;
     }
 
     video {
@@ -264,6 +261,7 @@
       letter-spacing: 0.5px;
       text-transform: uppercase;
       transition: all 0.3s ease;
+      pointer-events: auto;
     }
 
     .card-button:hover {
@@ -504,7 +502,7 @@
   <section class="hero">
     <!-- Video Background -->
     <div class="hero-video-container">
-      <video autoplay muted loop playsinline>
+      <video id="heroVideo" autoplay muted loop playsinline preload="auto">
         <source src="assets/showreel.mp4" type="video/mp4">
       </video>
     </div>
@@ -551,6 +549,29 @@
       link.addEventListener('click', () => {
         hamburger.classList.remove('active');
         mobileMenu.classList.remove('active');
+      });
+    });
+
+    // Force video to play
+    const heroVideo = document.getElementById('heroVideo');
+    
+    // Try to play video
+    const playPromise = heroVideo.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.catch(error => {
+        console.log('Autoplay bloqueado:', error);
+        // Se o autoplay foi bloqueado, o vídeo terá play no primeiro clique
+        document.addEventListener('click', () => {
+          heroVideo.play();
+        }, { once: true });
+      });
+    }
+
+    // Garante que o vídeo inicia quando carregado
+    heroVideo.addEventListener('loadeddata', () => {
+      heroVideo.play().catch(error => {
+        console.log('Erro ao reproduzir:', error);
       });
     });
   </script>

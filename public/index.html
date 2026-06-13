@@ -12,11 +12,14 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
       background: #000;
       color: #fff;
-      line-height: 1.6;
       overflow-x: hidden;
     }
 
@@ -38,8 +41,8 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(15px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding: 24px 40px;
     }
@@ -53,92 +56,185 @@
     }
 
     .logo {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
-      letter-spacing: -1px;
+      letter-spacing: -0.5px;
     }
 
     nav ul {
       display: flex;
       list-style: none;
       gap: 48px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      transition: opacity 0.3s ease;
+      opacity: 0.8;
     }
 
     nav a:hover {
-      opacity: 0.6;
-      transition: opacity 0.3s;
+      opacity: 1;
     }
 
-    /* HERO VIDEO */
-    .hero-video-section {
+    /* HERO VIDEO SECTION */
+    .hero-section {
       width: 100%;
-      min-height: 120vh;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 100px 40px 60px;
-      background: #000;
-      position: relative;
     }
 
-    .video-container {
-      width: 100%;
-      max-width: 1300px;
-      aspect-ratio: 16/9;
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
-      filter: grayscale(100%) blur(2px) contrast(1.05);
-      transition: filter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .video-container.active {
-      filter: grayscale(0%) blur(0px) contrast(1);
-    }
-
-    .video-container iframe {
+    .video-background {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      border: none;
+      z-index: 1;
+    }
+
+    .video-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) blur(3px) contrast(1.1) brightness(0.85);
+      transition: filter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .video-background.playing video {
+      filter: grayscale(0%) blur(0px) contrast(1) brightness(1);
+    }
+
+    /* NOISE EFFECT */
+    .video-background::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2" /></filter><rect width="100" height="100" fill="%23000" filter="url(%23noise)" opacity="0.08"/></svg>');
+      background-repeat: repeat;
+      pointer-events: none;
+      z-index: 10;
+      animation: noise-flicker 0.15s infinite;
+    }
+
+    .video-background.playing::before {
+      opacity: 0;
+      animation: none;
+    }
+
+    @keyframes noise-flicker {
+      0%, 100% { opacity: 0.05; }
+      50% { opacity: 0.08; }
+    }
+
+    /* PROFILE OVERLAY */
+    .profile-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      background: rgba(0, 0, 0, 0.3);
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .profile-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+    }
+
+    .profile-card {
+      text-align: center;
+      position: relative;
+      z-index: 30;
+    }
+
+    .profile-photo-hero {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 100px;
+      margin: 0 auto 40px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .profile-overlay.hidden .profile-photo-hero {
+      transform: translateY(-200%) scale(0.5);
+      opacity: 0;
+    }
+
+    .profile-photo-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-info-hero h1 {
+      font-size: 56px;
+      font-weight: 900;
+      margin-bottom: 16px;
+      letter-spacing: -2px;
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .profile-overlay.hidden .profile-info-hero h1 {
+      transform: translateY(50%) scale(0.8);
+      opacity: 0;
+    }
+
+    .profile-title-hero {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .profile-overlay.hidden .profile-title-hero {
+      transform: translateY(50%) scale(0.8);
+      opacity: 0;
     }
 
     /* PLAY BUTTON */
-    .play-button-wrapper {
+    .play-button-hero {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 100;
+      bottom: 60px;
+      z-index: 40;
       cursor: pointer;
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .play-button-wrapper.clicked {
-      animation: playButtonPop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    .play-button-hero.clicked {
+      animation: playPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
 
-    .play-button-wrapper.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    @keyframes playButtonPop {
-      0% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(4);
-        opacity: 0;
-      }
-    }
-
-    .play-icon {
-      width: 120px;
-      height: 120px;
+    .play-icon-hero {
+      width: 100px;
+      height: 100px;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 50%;
       display: flex;
@@ -148,254 +244,240 @@
       transition: all 0.3s ease;
     }
 
-    .play-button-wrapper:hover .play-icon {
-      transform: scale(1.15);
+    .play-button-hero:hover .play-icon-hero {
+      transform: scale(1.2);
       box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
     }
 
-    .play-icon svg {
-      width: 60px;
-      height: 60px;
+    .play-icon-hero svg {
+      width: 50px;
+      height: 50px;
       fill: #000;
-      margin-left: 6px;
+      margin-left: 4px;
     }
 
-    /* PROFILE SECTION */
-    .profile-section {
-      padding: 100px 40px;
-      background: #fff;
-      text-align: center;
+    @keyframes playPop {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(4);
+        opacity: 0;
+      }
     }
 
-    .profile-content {
-      max-width: 500px;
-      margin: 0 auto;
+    /* SCROLL FADE */
+    .fade-in-on-scroll {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
-    .profile-photo {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 80px;
-      margin: 0 auto 40px;
-      overflow: hidden;
-      border: 4px solid #f0f0f0;
-    }
-
-    .profile-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .profile-name {
-      font-size: 40px;
-      font-weight: 900;
-      color: #000;
-      margin-bottom: 16px;
-      letter-spacing: -1.5px;
-    }
-
-    .profile-title {
-      font-size: 18px;
-      color: #999;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 24px;
-    }
-
-    .profile-email {
-      font-size: 16px;
-      color: #666;
-      margin-bottom: 40px;
-    }
-
-    .profile-cta {
-      display: inline-block;
-      padding: 16px 48px;
-      background: #000;
-      color: #fff;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      border: none;
-      text-transform: uppercase;
-    }
-
-    .profile-cta:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    .fade-in-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* PROJECTS SECTION */
     .projects-section {
-      padding: 120px 40px;
-      background: #fff;
+      padding: 160px 40px;
+      background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
     }
 
     .section-header {
-      margin-bottom: 80px;
+      margin-bottom: 100px;
     }
 
     .section-header h2 {
-      font-size: clamp(48px, 8vw, 80px);
+      font-size: clamp(48px, 10vw, 90px);
       font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -2px;
-      margin-bottom: 16px;
-      color: #000;
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .section-header p {
       font-size: 18px;
-      color: #999;
-      max-width: 600px;
-      font-weight: 400;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 700px;
+      font-weight: 300;
+      line-height: 1.8;
     }
 
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
+      gap: 50px;
     }
 
     .project-item {
       cursor: pointer;
-      transition: opacity 0.3s ease;
+      transition: all 0.4s ease;
     }
 
     .project-item:hover {
-      opacity: 0.7;
+      transform: translateY(-8px);
     }
 
     .project-visual {
       width: 100%;
       aspect-ratio: 16/9;
-      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 60px;
-      margin-bottom: 24px;
+      font-size: 70px;
+      margin-bottom: 32px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s ease;
+    }
+
+    .project-item:hover .project-visual {
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .project-info h3 {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 700;
-      margin-bottom: 8px;
-      color: #000;
+      margin-bottom: 12px;
       letter-spacing: -1px;
     }
 
     .project-meta {
       display: flex;
-      gap: 16px;
+      gap: 20px;
       font-size: 13px;
-      color: #999;
-      margin-bottom: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 16px;
       font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
     }
 
     .project-description {
       font-size: 16px;
-      color: #666;
-      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.8;
+      font-weight: 300;
     }
 
     /* ABOUT SECTION */
     .about-section {
-      padding: 120px 40px;
-      background: #f9f9f9;
+      padding: 160px 40px;
+      background: #000;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .about-content {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 80px;
+      gap: 120px;
+      align-items: start;
     }
 
     .about-text h2 {
-      font-size: 48px;
+      font-size: clamp(40px, 8vw, 70px);
       font-weight: 900;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
       letter-spacing: -2px;
-      color: #000;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .about-text p {
       font-size: 18px;
-      color: #666;
-      margin-bottom: 24px;
-      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 28px;
+      line-height: 1.9;
+      font-weight: 300;
     }
 
-    .skills-container {
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
       margin-top: 60px;
     }
 
-    .skill-block {
-      margin-bottom: 48px;
+    .skill-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 32px;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s ease;
+    }
+
+    .skill-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-4px);
     }
 
     .skill-label {
-      font-size: 13px;
-      color: #999;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
       text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
       font-weight: 600;
     }
 
     .skill-name {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
-      margin-bottom: 12px;
-      color: #000;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
     }
 
     .skill-items {
-      font-size: 16px;
-      color: #666;
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.6);
       line-height: 1.8;
+      font-weight: 300;
     }
 
     /* CONTACT SECTION */
     .contact-section {
-      padding: 120px 40px;
-      background: #fff;
+      padding: 160px 40px;
+      background: #0a0a0a;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .contact-header {
-      text-align: center;
-      margin-bottom: 80px;
+    .contact-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     .contact-header h2 {
-      font-size: clamp(48px, 8vw, 80px);
+      font-size: clamp(40px, 10vw, 80px);
       font-weight: 900;
+      text-align: center;
+      margin-bottom: 60px;
       letter-spacing: -2px;
-      margin-bottom: 24px;
-      color: #000;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .contact-form {
-      max-width: 500px;
-      margin: 0 auto 60px;
+      margin-bottom: 60px;
     }
 
     .form-group {
-      margin-bottom: 24px;
+      margin-bottom: 32px;
     }
 
     .form-group input,
@@ -403,24 +485,23 @@
       width: 100%;
       padding: 16px 0;
       border: none;
-      border-bottom: 2px solid #000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       background: transparent;
       font-family: inherit;
       font-size: 16px;
-      font-weight: 400;
-      color: #000;
-      transition: border-color 0.3s;
+      color: #fff;
+      transition: border-color 0.3s ease;
     }
 
     .form-group input::placeholder,
     .form-group textarea::placeholder {
-      color: #999;
+      color: rgba(255, 255, 255, 0.4);
     }
 
     .form-group input:focus,
     .form-group textarea:focus {
       outline: none;
-      border-bottom-color: #666;
+      border-bottom-color: rgba(255, 255, 255, 0.6);
     }
 
     .form-group textarea {
@@ -430,85 +511,61 @@
 
     .form-submit {
       width: 100%;
-      padding: 18px;
-      background: #000;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.1);
       color: #fff;
-      border: none;
-      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 1px;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
       text-transform: uppercase;
+      backdrop-filter: blur(10px);
     }
 
     .form-submit:hover {
-      background: #333;
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
       transform: translateY(-2px);
     }
 
     .social-section {
       display: flex;
       justify-content: center;
-      gap: 40px;
-      margin-top: 80px;
+      gap: 50px;
     }
 
     .social-link {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #000;
-      transition: color 0.3s;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
     }
 
     .social-link:hover {
-      color: #666;
+      color: #fff;
+      transform: translateY(-2px);
     }
 
     /* FOOTER */
     footer {
       padding: 60px 40px;
-      border-top: 1px solid #e8e8e8;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       text-align: center;
-      color: #999;
+      color: rgba(255, 255, 255, 0.4);
       font-size: 13px;
-      background: #fff;
+      background: #000;
     }
 
     /* RESPONSIVE */
-    @media (max-width: 768px) {
-      header { padding: 16px 24px; }
-      nav ul { display: none; }
-      
-      .hero-video-section {
-        padding: 80px 20px 40px;
-      }
-
-      .video-container {
-        border-radius: 16px;
-      }
-
-      .play-icon {
-        width: 90px;
-        height: 90px;
-      }
-
-      .play-icon svg {
-        width: 45px;
-        height: 45px;
-      }
-
-      .section-header h2,
-      .contact-header h2 {
-        font-size: 40px;
-      }
-
-      .projects-grid {
+    @media (max-width: 1024px) {
+      .projects-grid,
+      .skills-grid {
         grid-template-columns: 1fr;
-        gap: 32px;
       }
 
       .about-content {
@@ -516,8 +573,39 @@
         gap: 60px;
       }
 
-      .profile-name {
-        font-size: 32px;
+      nav ul {
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 16px 24px; }
+      nav ul { display: none; }
+      
+      .section-header h2,
+      .contact-header h2 {
+        font-size: 36px;
+      }
+
+      .profile-info-hero h1 {
+        font-size: 36px;
+      }
+
+      .profile-photo-hero {
+        width: 140px;
+        height: 140px;
+        font-size: 70px;
+      }
+
+      .projects-section,
+      .about-section,
+      .contact-section {
+        padding: 100px 24px;
+      }
+
+      .social-section {
+        flex-direction: column;
+        gap: 24px;
       }
     }
   </style>
@@ -535,46 +623,49 @@
     </nav>
   </header>
 
-  <!-- HERO VIDEO -->
-  <section class="hero-video-section">
-    <div class="video-container" id="videoContainer">
-      <div class="play-button-wrapper" id="playButton">
-        <div class="play-icon">
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="video-background" id="videoBackground">
+      <video autoplay muted loop playsinline>
+        <source src="https://www.youtube.com/embed/NjgBbPhE2tk?autoplay=1" type="video/mp4">
+      </video>
+      <iframe 
+        id="youtubeVideo"
+        src="https://www.youtube.com/embed/NjgBbPhE2tk?autoplay=1&controls=0&modestbranding=1&loop=1&playlist=NjgBbPhE2tk&rel=0&fs=0&showinfo=0&iv_load_policy=3"
+        style="position: absolute; width: 100%; height: 100%; border: none;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="profile-overlay" id="profileOverlay">
+      <div class="profile-card">
+        <div class="profile-photo-hero">👤</div>
+        <div class="profile-info-hero">
+          <h1>Guilherme Prestes</h1>
+          <p class="profile-title-hero">Motion Designer & Video Editor</p>
+        </div>
+      </div>
+      <div class="play-button-hero" id="playButton">
+        <div class="play-icon-hero">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M8 5v14l11-7z"/>
           </svg>
         </div>
       </div>
-      <iframe 
-        id="youtubeVideo"
-        src="https://www.youtube.com/embed/NjgBbPhE2tk?autoplay=1&controls=1&modestbranding=1&fs=1&loop=1&playlist=NjgBbPhE2tk"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
-  </section>
-
-  <!-- PROFILE -->
-  <section class="profile-section">
-    <div class="profile-content">
-      <div class="profile-photo">👤</div>
-      <div class="profile-name">Guilherme Prestes</div>
-      <div class="profile-title">Motion Designer & Video Editor</div>
-      <div class="profile-email">prestes.g@gmail.com</div>
-      <a href="#projects" class="profile-cta">View My Work</a>
     </div>
   </section>
 
   <!-- PROJECTS -->
   <section class="projects-section" id="projects">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header fade-in-on-scroll">
         <h2>Featured Work</h2>
-        <p>A selection of motion design and video editing projects.</p>
+        <p>A selection of motion design and video editing projects showcasing creativity and technical excellence.</p>
       </div>
 
       <div class="projects-grid">
-        <div class="project-item">
+        <div class="project-item fade-in-on-scroll">
           <div class="project-visual">🎬</div>
           <div class="project-info">
             <h3>Motion Design Reel</h3>
@@ -586,7 +677,7 @@
           </div>
         </div>
 
-        <div class="project-item">
+        <div class="project-item fade-in-on-scroll">
           <div class="project-visual">📹</div>
           <div class="project-info">
             <h3>Product Video</h3>
@@ -598,7 +689,7 @@
           </div>
         </div>
 
-        <div class="project-item">
+        <div class="project-item fade-in-on-scroll">
           <div class="project-visual">✨</div>
           <div class="project-info">
             <h3>Brand Animation</h3>
@@ -610,7 +701,7 @@
           </div>
         </div>
 
-        <div class="project-item">
+        <div class="project-item fade-in-on-scroll">
           <div class="project-visual">🌈</div>
           <div class="project-info">
             <h3>Experimental Visuals</h3>
@@ -629,29 +720,37 @@
   <section class="about-section" id="about">
     <div class="container">
       <div class="about-content">
-        <div class="about-text">
+        <div class="fade-in-on-scroll">
           <h2>About</h2>
           <p>I'm a motion designer and video editor specializing in creating bold, experimental animations. My work combines creative direction with technical precision to tell compelling visual stories.</p>
           <p>With expertise in motion design, video editing, and animation, I help brands and creators bring their visions to life through dynamic visual content.</p>
         </div>
 
-        <div class="skills-container">
-          <div class="skill-block">
-            <div class="skill-label">Motion Design</div>
-            <div class="skill-name">Tools</div>
-            <div class="skill-items">After Effects<br>Cinema 4D<br>Blender</div>
-          </div>
+        <div>
+          <div class="skills-grid">
+            <div class="skill-card fade-in-on-scroll">
+              <div class="skill-label">Motion Design</div>
+              <div class="skill-name">Tools</div>
+              <div class="skill-items">After Effects<br>Cinema 4D<br>Blender</div>
+            </div>
 
-          <div class="skill-block">
-            <div class="skill-label">Video Editing</div>
-            <div class="skill-name">Tools</div>
-            <div class="skill-items">Premiere Pro<br>Final Cut Pro<br>DaVinci Resolve</div>
-          </div>
+            <div class="skill-card fade-in-on-scroll">
+              <div class="skill-label">Video Editing</div>
+              <div class="skill-name">Tools</div>
+              <div class="skill-items">Premiere Pro<br>Final Cut Pro<br>DaVinci Resolve</div>
+            </div>
 
-          <div class="skill-block">
-            <div class="skill-label">Design</div>
-            <div class="skill-name">Tools</div>
-            <div class="skill-items">Figma<br>Photoshop<br>Illustrator</div>
+            <div class="skill-card fade-in-on-scroll">
+              <div class="skill-label">Design</div>
+              <div class="skill-name">Tools</div>
+              <div class="skill-items">Figma<br>Photoshop<br>Illustrator</div>
+            </div>
+
+            <div class="skill-card fade-in-on-scroll">
+              <div class="skill-label">Development</div>
+              <div class="skill-name">Web</div>
+              <div class="skill-items">HTML/CSS<br>JavaScript<br>React</div>
+            </div>
           </div>
         </div>
       </div>
@@ -661,28 +760,30 @@
   <!-- CONTACT -->
   <section class="contact-section" id="contact">
     <div class="container">
-      <div class="contact-header">
-        <h2>Let's work together</h2>
-      </div>
+      <div class="contact-wrapper fade-in-on-scroll">
+        <div class="contact-header">
+          <h2>Let's Work Together</h2>
+        </div>
 
-      <form class="contact-form" onsubmit="handleSubmit(event)">
-        <div class="form-group">
-          <input type="text" placeholder="Name" required>
-        </div>
-        <div class="form-group">
-          <input type="email" placeholder="Email" required>
-        </div>
-        <div class="form-group">
-          <textarea placeholder="Message" required></textarea>
-        </div>
-        <button type="submit" class="form-submit">Send Message</button>
-      </form>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <input type="text" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <input type="email" placeholder="Your email" required>
+          </div>
+          <div class="form-group">
+            <textarea placeholder="Tell me about your project..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message</button>
+        </form>
 
-      <div class="social-section">
-        <a href="https://github.com/cohl" class="social-link" target="_blank">GitHub</a>
-        <a href="https://linkedin.com" class="social-link" target="_blank">LinkedIn</a>
-        <a href="https://instagram.com" class="social-link" target="_blank">Instagram</a>
-        <a href="mailto:prestes.g@gmail.com" class="social-link">Email</a>
+        <div class="social-section">
+          <a href="https://github.com/cohl" class="social-link" target="_blank">GitHub</a>
+          <a href="https://linkedin.com" class="social-link" target="_blank">LinkedIn</a>
+          <a href="https://instagram.com" class="social-link" target="_blank">Instagram</a>
+          <a href="mailto:prestes.g@gmail.com" class="social-link">Email</a>
+        </div>
       </div>
     </div>
   </section>
@@ -693,41 +794,42 @@
   </footer>
 
   <script>
-    function handleSubmit(event) {
-      event.preventDefault();
-      alert('Obrigado! Entraremos em contato em breve.');
-      event.target.reset();
-    }
-
     const playButton = document.getElementById('playButton');
-    const videoContainer = document.getElementById('videoContainer');
-    const youtubeVideo = document.getElementById('youtubeVideo');
-    let videoStarted = false;
+    const profileOverlay = document.getElementById('profileOverlay');
+    const videoBackground = document.getElementById('videoBackground');
+    let isPlaying = false;
 
     playButton.addEventListener('click', function() {
-      if (!videoStarted) {
-        videoStarted = true;
+      if (!isPlaying) {
+        isPlaying = true;
         playButton.classList.add('clicked');
         
         setTimeout(() => {
-          playButton.classList.add('hidden');
-          videoContainer.classList.add('active');
-        }, 350);
+          profileOverlay.classList.add('hidden');
+          videoBackground.classList.add('playing');
+        }, 200);
       }
     });
 
-    youtubeVideo.addEventListener('mouseenter', function() {
-      if (!videoStarted) {
-        videoStarted = true;
-        playButton.classList.add('clicked');
-        
-        setTimeout(() => {
-          playButton.classList.add('hidden');
-          videoContainer.classList.add('active');
-        }, 350);
-      }
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in-on-scroll').forEach(el => {
+      observer.observe(el);
     });
 
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -737,6 +839,12 @@
         }
       });
     });
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      alert('Obrigado! Entraremos em contato em breve.');
+      event.target.reset();
+    }
   </script>
 </body>
 </html>

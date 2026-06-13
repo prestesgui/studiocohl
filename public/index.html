@@ -18,9 +18,9 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-      background: #000;
-      color: #fff;
-      overflow-x: hidden;
+      background: #ffffff;
+      color: #000;
+      line-height: 1.6;
     }
 
     a {
@@ -41,9 +41,9 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
       padding: 24px 40px;
     }
 
@@ -73,208 +73,160 @@
 
     nav a {
       transition: opacity 0.3s ease;
-      opacity: 0.8;
+      opacity: 0.7;
     }
 
     nav a:hover {
       opacity: 1;
     }
 
-    /* HERO VIDEO SECTION */
+    /* HERO SECTION */
     .hero-section {
       width: 100%;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
+      min-height: 120vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 100px 40px 60px;
+      background: #ffffff;
+      position: relative;
+      margin-top: 80px;
     }
 
-    .video-background {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .video-wrapper {
       width: 100%;
-      height: 100%;
-      z-index: 1;
+      max-width: 1300px;
+      aspect-ratio: 16/9;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.12);
     }
 
-    .video-background video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%) blur(3px) contrast(1.1) brightness(0.85);
-      transition: filter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    .video-wrapper.grayscale {
+      filter: grayscale(100%) blur(3px) contrast(1.1);
     }
 
-    .video-background.playing video {
-      filter: grayscale(0%) blur(0px) contrast(1) brightness(1);
-    }
-
-    /* NOISE EFFECT */
-    .video-background::before {
+    .video-wrapper.grayscale::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2" /></filter><rect width="100" height="100" fill="%23000" filter="url(%23noise)" opacity="0.08"/></svg>');
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2" /></filter><rect width="100" height="100" fill="%23000" filter="url(%23noise)" opacity="0.06"/></svg>');
       background-repeat: repeat;
       pointer-events: none;
       z-index: 10;
       animation: noise-flicker 0.15s infinite;
     }
 
-    .video-background.playing::before {
-      opacity: 0;
-      animation: none;
+    .video-wrapper.grayscale.playing::before {
+      display: none;
     }
 
     @keyframes noise-flicker {
-      0%, 100% { opacity: 0.05; }
-      50% { opacity: 0.08; }
+      0%, 100% { opacity: 0.04; }
+      50% { opacity: 0.06; }
     }
 
-    /* PROFILE OVERLAY */
-    .profile-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .video-wrapper iframe {
       width: 100%;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 20;
-      background: rgba(0, 0, 0, 0.3);
-      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: none;
     }
 
-    .profile-overlay.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-100%);
-    }
-
-    .profile-card {
-      text-align: center;
-      position: relative;
-      z-index: 30;
-    }
-
-    .profile-photo-hero {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 100px;
-      margin: 0 auto 40px;
-      border: 2px solid rgba(255, 255, 255, 0.2);
+    /* PHOTO OVERLAY */
+    .photo-overlay {
+      position: absolute;
+      top: 50%;
+      right: 60px;
+      transform: translateY(-50%);
+      z-index: 100;
+      width: 280px;
+      height: 280px;
+      border-radius: 12px;
       overflow: hidden;
-      backdrop-filter: blur(10px);
+      background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 120px;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
       transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .profile-overlay.hidden .profile-photo-hero {
-      transform: translateY(-200%) scale(0.5);
-      opacity: 0;
-    }
-
-    .profile-photo-hero img {
+    .photo-overlay img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .profile-info-hero h1 {
-      font-size: 56px;
-      font-weight: 900;
-      margin-bottom: 16px;
-      letter-spacing: -2px;
-      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .profile-overlay.hidden .profile-info-hero h1 {
-      transform: translateY(50%) scale(0.8);
+    .photo-overlay.hidden {
       opacity: 0;
-    }
-
-    .profile-title-hero {
-      font-size: 20px;
-      color: rgba(255, 255, 255, 0.8);
-      font-weight: 400;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 32px;
-      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .profile-overlay.hidden .profile-title-hero {
-      transform: translateY(50%) scale(0.8);
-      opacity: 0;
+      transform: translateY(-50%) translateX(150%);
+      pointer-events: none;
     }
 
     /* PLAY BUTTON */
-    .play-button-hero {
+    .play-button {
       position: absolute;
-      bottom: 60px;
-      z-index: 40;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 90;
       cursor: pointer;
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .play-button-hero.clicked {
+    .play-button.clicked {
       animation: playPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
 
-    .play-icon-hero {
-      width: 100px;
-      height: 100px;
+    .play-icon {
+      width: 110px;
+      height: 110px;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 60px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 60px rgba(0, 0, 0, 0.2);
       transition: all 0.3s ease;
     }
 
-    .play-button-hero:hover .play-icon-hero {
-      transform: scale(1.2);
-      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+    .play-button:hover .play-icon {
+      transform: scale(1.15);
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.25);
     }
 
-    .play-icon-hero svg {
-      width: 50px;
-      height: 50px;
+    .play-icon svg {
+      width: 55px;
+      height: 55px;
       fill: #000;
-      margin-left: 4px;
+      margin-left: 5px;
     }
 
     @keyframes playPop {
       0% {
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1);
         opacity: 1;
       }
       100% {
-        transform: scale(4);
+        transform: translate(-50%, -50%) scale(4);
         opacity: 0;
       }
     }
 
-    /* SCROLL FADE */
-    .fade-in-on-scroll {
+    /* FADE ON SCROLL */
+    .fade-in {
       opacity: 0;
       transform: translateY(40px);
       transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
-    .fade-in-on-scroll.visible {
+    .fade-in.visible {
       opacity: 1;
       transform: translateY(0);
     }
@@ -282,7 +234,8 @@
     /* PROJECTS SECTION */
     .projects-section {
       padding: 160px 40px;
-      background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+      background: #ffffff;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .section-header {
@@ -295,17 +248,14 @@
       line-height: 1;
       letter-spacing: -3px;
       margin-bottom: 24px;
-      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #000;
     }
 
     .section-header p {
       font-size: 18px;
-      color: rgba(255, 255, 255, 0.6);
+      color: #666;
       max-width: 700px;
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.8;
     }
 
@@ -327,8 +277,8 @@
     .project-visual {
       width: 100%;
       aspect-ratio: 16/9;
-      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 16px;
       display: flex;
       align-items: center;
@@ -336,13 +286,12 @@
       font-size: 70px;
       margin-bottom: 32px;
       overflow: hidden;
-      backdrop-filter: blur(10px);
       transition: all 0.4s ease;
     }
 
     .project-item:hover .project-visual {
-      background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, #ececec 0%, #dcdcdc 100%);
     }
 
     .project-info h3 {
@@ -350,13 +299,14 @@
       font-weight: 700;
       margin-bottom: 12px;
       letter-spacing: -1px;
+      color: #000;
     }
 
     .project-meta {
       display: flex;
       gap: 20px;
       font-size: 13px;
-      color: rgba(255, 255, 255, 0.5);
+      color: #999;
       margin-bottom: 16px;
       font-weight: 500;
       text-transform: uppercase;
@@ -365,16 +315,16 @@
 
     .project-description {
       font-size: 16px;
-      color: rgba(255, 255, 255, 0.7);
+      color: #666;
       line-height: 1.8;
-      font-weight: 300;
+      font-weight: 400;
     }
 
     /* ABOUT SECTION */
     .about-section {
       padding: 160px 40px;
-      background: #000;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: #ffffff;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .about-content {
@@ -389,18 +339,15 @@
       font-weight: 900;
       margin-bottom: 40px;
       letter-spacing: -2px;
-      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #000;
     }
 
     .about-text p {
       font-size: 18px;
-      color: rgba(255, 255, 255, 0.7);
+      color: #666;
       margin-bottom: 28px;
       line-height: 1.9;
-      font-weight: 300;
+      font-weight: 400;
     }
 
     .skills-grid {
@@ -411,23 +358,22 @@
     }
 
     .skill-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 12px;
       padding: 32px;
-      backdrop-filter: blur(10px);
       transition: all 0.4s ease;
     }
 
     .skill-card:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.15);
       transform: translateY(-4px);
     }
 
     .skill-label {
       font-size: 12px;
-      color: rgba(255, 255, 255, 0.5);
+      color: #999;
       text-transform: uppercase;
       letter-spacing: 2px;
       margin-bottom: 12px;
@@ -439,20 +385,21 @@
       font-weight: 700;
       margin-bottom: 16px;
       letter-spacing: -0.5px;
+      color: #000;
     }
 
     .skill-items {
       font-size: 15px;
-      color: rgba(255, 255, 255, 0.6);
+      color: #666;
       line-height: 1.8;
-      font-weight: 300;
+      font-weight: 400;
     }
 
     /* CONTACT SECTION */
     .contact-section {
       padding: 160px 40px;
-      background: #0a0a0a;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: #ffffff;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .contact-wrapper {
@@ -466,10 +413,7 @@
       text-align: center;
       margin-bottom: 60px;
       letter-spacing: -2px;
-      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #000;
     }
 
     .contact-form {
@@ -485,23 +429,23 @@
       width: 100%;
       padding: 16px 0;
       border: none;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       background: transparent;
       font-family: inherit;
       font-size: 16px;
-      color: #fff;
+      color: #000;
       transition: border-color 0.3s ease;
     }
 
     .form-group input::placeholder,
     .form-group textarea::placeholder {
-      color: rgba(255, 255, 255, 0.4);
+      color: #999;
     }
 
     .form-group input:focus,
     .form-group textarea:focus {
       outline: none;
-      border-bottom-color: rgba(255, 255, 255, 0.6);
+      border-bottom-color: rgba(0, 0, 0, 0.6);
     }
 
     .form-group textarea {
@@ -512,22 +456,21 @@
     .form-submit {
       width: 100%;
       padding: 16px;
-      background: rgba(255, 255, 255, 0.1);
+      background: #000;
       color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
+      border: 1px solid #000;
+      border-radius: 6px;
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 1px;
       cursor: pointer;
       transition: all 0.3s ease;
       text-transform: uppercase;
-      backdrop-filter: blur(10px);
     }
 
     .form-submit:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.4);
+      background: #333;
+      border-color: #333;
       transform: translateY(-2px);
     }
 
@@ -542,23 +485,24 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: rgba(255, 255, 255, 0.7);
+      color: #000;
+      opacity: 0.7;
       transition: all 0.3s ease;
     }
 
     .social-link:hover {
-      color: #fff;
+      opacity: 1;
       transform: translateY(-2px);
     }
 
     /* FOOTER */
     footer {
       padding: 60px 40px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
       text-align: center;
-      color: rgba(255, 255, 255, 0.4);
+      color: #999;
       font-size: 13px;
-      background: #000;
+      background: #ffffff;
     }
 
     /* RESPONSIVE */
@@ -571,6 +515,13 @@
       .about-content {
         grid-template-columns: 1fr;
         gap: 60px;
+      }
+
+      .photo-overlay {
+        width: 220px;
+        height: 220px;
+        font-size: 80px;
+        right: 40px;
       }
 
       nav ul {
@@ -587,14 +538,11 @@
         font-size: 36px;
       }
 
-      .profile-info-hero h1 {
-        font-size: 36px;
-      }
-
-      .profile-photo-hero {
-        width: 140px;
-        height: 140px;
-        font-size: 70px;
+      .photo-overlay {
+        width: 180px;
+        height: 180px;
+        font-size: 60px;
+        right: 20px;
       }
 
       .projects-section,
@@ -625,47 +573,36 @@
 
   <!-- HERO SECTION -->
   <section class="hero-section">
-    <div class="video-background" id="videoBackground">
-      <video autoplay muted loop playsinline>
-        <source src="https://www.youtube.com/embed/NjgBbPhE2tk?autoplay=1" type="video/mp4">
-      </video>
-      <iframe 
-        id="youtubeVideo"
-        src="https://www.youtube.com/embed/NjgBbPhE2tk?autoplay=1&controls=0&modestbranding=1&loop=1&playlist=NjgBbPhE2tk&rel=0&fs=0&showinfo=0&iv_load_policy=3"
-        style="position: absolute; width: 100%; height: 100%; border: none;"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
-
-    <div class="profile-overlay" id="profileOverlay">
-      <div class="profile-card">
-        <div class="profile-photo-hero">👤</div>
-        <div class="profile-info-hero">
-          <h1>Guilherme Prestes</h1>
-          <p class="profile-title-hero">Motion Designer & Video Editor</p>
-        </div>
-      </div>
-      <div class="play-button-hero" id="playButton">
-        <div class="play-icon-hero">
+    <div class="video-wrapper grayscale" id="videoWrapper">
+      <div class="play-button" id="playButton">
+        <div class="play-icon">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M8 5v14l11-7z"/>
           </svg>
         </div>
       </div>
+      
+      <div class="photo-overlay" id="photoOverlay">📷</div>
+
+      <iframe 
+        id="youtubeVideo"
+        src="https://www.youtube.com/embed/NjgBbPhE2tk?autoplay=1&controls=1&modestbranding=1&rel=0&fs=1&loop=1&playlist=NjgBbPhE2tk"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
     </div>
   </section>
 
   <!-- PROJECTS -->
   <section class="projects-section" id="projects">
     <div class="container">
-      <div class="section-header fade-in-on-scroll">
+      <div class="section-header fade-in">
         <h2>Featured Work</h2>
         <p>A selection of motion design and video editing projects showcasing creativity and technical excellence.</p>
       </div>
 
       <div class="projects-grid">
-        <div class="project-item fade-in-on-scroll">
+        <div class="project-item fade-in">
           <div class="project-visual">🎬</div>
           <div class="project-info">
             <h3>Motion Design Reel</h3>
@@ -677,7 +614,7 @@
           </div>
         </div>
 
-        <div class="project-item fade-in-on-scroll">
+        <div class="project-item fade-in">
           <div class="project-visual">📹</div>
           <div class="project-info">
             <h3>Product Video</h3>
@@ -689,7 +626,7 @@
           </div>
         </div>
 
-        <div class="project-item fade-in-on-scroll">
+        <div class="project-item fade-in">
           <div class="project-visual">✨</div>
           <div class="project-info">
             <h3>Brand Animation</h3>
@@ -701,7 +638,7 @@
           </div>
         </div>
 
-        <div class="project-item fade-in-on-scroll">
+        <div class="project-item fade-in">
           <div class="project-visual">🌈</div>
           <div class="project-info">
             <h3>Experimental Visuals</h3>
@@ -720,7 +657,7 @@
   <section class="about-section" id="about">
     <div class="container">
       <div class="about-content">
-        <div class="fade-in-on-scroll">
+        <div class="fade-in">
           <h2>About</h2>
           <p>I'm a motion designer and video editor specializing in creating bold, experimental animations. My work combines creative direction with technical precision to tell compelling visual stories.</p>
           <p>With expertise in motion design, video editing, and animation, I help brands and creators bring their visions to life through dynamic visual content.</p>
@@ -728,25 +665,25 @@
 
         <div>
           <div class="skills-grid">
-            <div class="skill-card fade-in-on-scroll">
+            <div class="skill-card fade-in">
               <div class="skill-label">Motion Design</div>
               <div class="skill-name">Tools</div>
               <div class="skill-items">After Effects<br>Cinema 4D<br>Blender</div>
             </div>
 
-            <div class="skill-card fade-in-on-scroll">
+            <div class="skill-card fade-in">
               <div class="skill-label">Video Editing</div>
               <div class="skill-name">Tools</div>
               <div class="skill-items">Premiere Pro<br>Final Cut Pro<br>DaVinci Resolve</div>
             </div>
 
-            <div class="skill-card fade-in-on-scroll">
+            <div class="skill-card fade-in">
               <div class="skill-label">Design</div>
               <div class="skill-name">Tools</div>
               <div class="skill-items">Figma<br>Photoshop<br>Illustrator</div>
             </div>
 
-            <div class="skill-card fade-in-on-scroll">
+            <div class="skill-card fade-in">
               <div class="skill-label">Development</div>
               <div class="skill-name">Web</div>
               <div class="skill-items">HTML/CSS<br>JavaScript<br>React</div>
@@ -760,7 +697,7 @@
   <!-- CONTACT -->
   <section class="contact-section" id="contact">
     <div class="container">
-      <div class="contact-wrapper fade-in-on-scroll">
+      <div class="contact-wrapper fade-in">
         <div class="contact-header">
           <h2>Let's Work Together</h2>
         </div>
@@ -795,8 +732,8 @@
 
   <script>
     const playButton = document.getElementById('playButton');
-    const profileOverlay = document.getElementById('profileOverlay');
-    const videoBackground = document.getElementById('videoBackground');
+    const videoWrapper = document.getElementById('videoWrapper');
+    const photoOverlay = document.getElementById('photoOverlay');
     let isPlaying = false;
 
     playButton.addEventListener('click', function() {
@@ -805,8 +742,8 @@
         playButton.classList.add('clicked');
         
         setTimeout(() => {
-          profileOverlay.classList.add('hidden');
-          videoBackground.classList.add('playing');
+          videoWrapper.classList.remove('grayscale');
+          photoOverlay.classList.add('hidden');
         }, 200);
       }
     });
@@ -825,7 +762,7 @@
       });
     }, observerOptions);
 
-    document.querySelectorAll('.fade-in-on-scroll').forEach(el => {
+    document.querySelectorAll('.fade-in').forEach(el => {
       observer.observe(el);
     });
 

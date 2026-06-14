@@ -1,580 +1,537 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guilherme Prestes • Video Editor & Motion Designer</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    html, body {
-      width: 100%;
-      height: 100%;
-    }
+<title>Guilherme Prestes | Motion Designer</title>
 
-    body {
-      font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
-      background: #ffffff;
-      color: #000;
-      overflow-x: hidden;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
-    /* HEADER */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      height: 72px;
-      background: #ffffff;
-      border-bottom: 1px solid #e8e8e8;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-    }
+<style>
 
-    .header-logo {
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 60px;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+html{
+scroll-behavior:smooth;
+}
 
-    nav a {
-      font-size: 13px;
-      font-weight: 500;
-      text-decoration: none;
-      color: #000;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
+body{
+font-family:'Inter',sans-serif;
+background:#fff;
+color:#111;
+overflow-x:hidden;
+}
 
-    nav a:hover {
-      opacity: 1;
-    }
+/* HEADER */
 
-    /* HERO SECTION */
-    .hero {
-      position: relative;
-      width: 100%;
-      height: calc(100vh - 72px);
-      margin-top: 72px;
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:72px;
+background:#fff;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 40px;
+border-bottom:1px solid #eee;
+z-index:1000;
+}
 
-    .hero-video-container {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      right: 12px;
-      bottom: 0;
-      border-radius: 24px;
-      overflow: hidden;
-      z-index: 0;
-      background: #000;
-    }
+.logo{
+font-size:14px;
+font-weight:700;
+}
 
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%) contrast(120%) brightness(45%);
-      display: block;
-    }
+nav{
+display:flex;
+gap:40px;
+}
 
-    /* Dark overlay */
-    .hero-video-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.25);
-      z-index: 2;
-      pointer-events: none;
-    }
+nav a{
+text-decoration:none;
+color:#111;
+font-size:13px;
+font-weight:500;
+}
 
-    /* Grain/Noise Animation */
-    .hero-video-container::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2" /></filter><rect width="100" height="100" fill="%23000" filter="url(%23noise)" opacity="0.05"/></svg>');
-      background-repeat: repeat;
-      z-index: 3;
-      pointer-events: none;
-      animation: grain 0.15s infinite;
-    }
+/* HERO */
 
-    @keyframes grain {
-      0%, 100% { transform: translate(0, 0); }
-      10% { transform: translate(-2px, -2px); }
-      20% { transform: translate(2px, 2px); }
-      30% { transform: translate(-1px, 1px); }
-      40% { transform: translate(1px, -1px); }
-      50% { transform: translate(0, 0); }
-      60% { transform: translate(2px, -2px); }
-      70% { transform: translate(-2px, 1px); }
-      80% { transform: translate(1px, 2px); }
-      90% { transform: translate(-1px, -1px); }
-    }
+.hero{
+position:relative;
+height:100vh;
+margin-top:72px;
+margin-left:12px;
+margin-right:12px;
+border-radius:24px;
+overflow:hidden;
+}
 
-    /* Content */
-    .hero-content {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      padding-top: 80px;
-      padding-left: 60px;
-      padding-right: 60px;
-      pointer-events: none;
-    }
+.hero video{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
 
-    .hero-text-left {
-      flex: 1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
-    }
+filter:
+grayscale(100%)
+blur(3px)
+brightness(.45)
+contrast(1.2);
 
-    .hero-title {
-      font-size: clamp(110px, 15vw, 280px);
-      font-weight: 900;
-      color: #ffffff;
-      line-height: 0.9;
-      letter-spacing: -4px;
-      max-width: 90%;
-    }
+transition:1.2s ease;
+}
 
-    .hero-text-right {
-      position: absolute;
-      top: 50%;
-      right: 60px;
-      transform: translateY(-50%);
-      text-align: right;
-    }
+.hero.playing video{
+filter:none;
+}
 
-    .hero-services {
-      font-size: clamp(14px, 2vw, 20px);
-      font-weight: 400;
-      color: #ffffff;
-      line-height: 1.6;
-      opacity: 0.9;
-      letter-spacing: 0.5px;
-    }
+.dark-overlay{
+position:absolute;
+inset:0;
+background:#000;
+opacity:.25;
+z-index:2;
+transition:1s;
+}
 
-    /* Floating Card */
-    .floating-card {
-      position: absolute;
-      bottom: 40px;
-      right: 40px;
-      z-index: 20;
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 24px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-      pointer-events: auto;
-      transition: transform 0.3s ease;
-    }
+.hero.playing .dark-overlay{
+opacity:0;
+}
 
-    .floating-card:hover {
-      transform: translateY(-4px);
-    }
+.noise{
+position:absolute;
+inset:0;
+z-index:3;
+pointer-events:none;
+opacity:.08;
 
-    .card-image {
-      width: 80px;
-      height: 80px;
-      border-radius: 12px;
-      overflow: hidden;
-      flex-shrink: 0;
-      background: #f0f0f0;
-    }
+background-image:
+radial-gradient(circle,#fff 1px,transparent 1px);
 
-    .card-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+background-size:5px 5px;
+mix-blend-mode:overlay;
+transition:1s;
+}
 
-    .card-content {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+.hero.playing .noise{
+opacity:0;
+}
 
-    .card-role {
-      font-size: 12px;
-      color: #999;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
+.hero-content{
+position:relative;
+z-index:10;
+height:100%;
+padding:80px;
+}
 
-    .card-name {
-      font-size: 18px;
-      font-weight: 700;
-      color: #000;
-      line-height: 1;
-    }
+.hero-title{
+font-size:clamp(60px,8vw,140px);
+font-weight:900;
+line-height:.9;
+letter-spacing:-4px;
+color:white;
+max-width:800px;
+}
 
-    .card-button {
-      margin-top: 8px;
-      padding: 10px 24px;
-      background: #000;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
-      pointer-events: auto;
-    }
+.play-btn{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:90px;
+height:90px;
+border-radius:50%;
+background:white;
+border:none;
+cursor:pointer;
+font-size:30px;
+z-index:20;
+}
 
-    .card-button:hover {
-      background: #333;
-      transform: scale(1.05);
-    }
+.hero.playing .play-btn{
+display:none;
+}
 
-    /* Hamburger Menu */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      gap: 5px;
-    }
+/* CARD */
 
-    .hamburger span {
-      width: 24px;
-      height: 2px;
-      background: #000;
-      transition: all 0.3s ease;
-    }
+.floating-card{
+position:absolute;
+right:40px;
+bottom:40px;
+background:white;
+padding:16px;
+border-radius:20px;
+display:flex;
+align-items:center;
+gap:16px;
+z-index:20;
+max-width:340px;
+}
 
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(8px, 8px);
-    }
+.card-image{
+width:96px;
+height:96px;
+border-radius:14px;
+overflow:hidden;
+flex-shrink:0;
+}
 
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
+.card-image img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
 
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
-    }
+.card-role{
+font-size:11px;
+color:#777;
+margin-bottom:4px;
+}
 
-    /* Mobile Menu */
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 72px;
-      left: 0;
-      right: 0;
-      background: #ffffff;
-      border-bottom: 1px solid #e8e8e8;
-      flex-direction: column;
-      gap: 20px;
-      padding: 40px;
-      z-index: 999;
-      animation: slideDown 0.3s ease;
-    }
+.card-name{
+font-size:15px;
+font-weight:700;
+margin-bottom:10px;
+}
 
-    .mobile-menu.active {
-      display: flex;
-    }
+.card-button{
+display:inline-block;
+padding:7px 14px;
+font-size:11px;
+background:#111;
+color:white;
+text-decoration:none;
+border-radius:999px;
+}
 
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+/* SECTIONS */
 
-    .mobile-menu a {
-      font-size: 16px;
-      font-weight: 500;
-      color: #000;
-      text-decoration: none;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
+section.content{
+padding:120px 10%;
+}
 
-    /* TABLET */
-    @media (max-width: 1024px) {
-      header {
-        padding: 0 24px;
-      }
+.section-title{
+font-size:52px;
+font-weight:900;
+margin-bottom:60px;
+letter-spacing:-2px;
+}
 
-      .hero-content {
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-top: 60px;
-      }
+/* WORK */
 
-      .hero-title {
-        font-size: clamp(80px, 12vw, 200px);
-      }
+.work-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:30px;
+}
 
-      .hero-text-right {
-        right: 40px;
-      }
+.work-item{
+background:#f5f5f5;
+border-radius:20px;
+padding:30px;
+min-height:220px;
+}
 
-      .floating-card {
-        bottom: 30px;
-        right: 30px;
-        padding: 20px;
-        gap: 16px;
-      }
+.work-item h3{
+margin-bottom:10px;
+}
 
-      .card-image {
-        width: 70px;
-        height: 70px;
-      }
+/* ABOUT */
 
-      .card-name {
-        font-size: 16px;
-      }
-    }
+.about-text{
+max-width:900px;
+font-size:20px;
+line-height:1.8;
+color:#444;
+}
 
-    /* MOBILE */
-    @media (max-width: 768px) {
-      header {
-        padding: 0 20px;
-      }
+.about-text p{
+margin-bottom:30px;
+}
 
-      nav ul {
-        display: none;
-      }
+/* CONTACT */
 
-      .hamburger {
-        display: flex;
-      }
+.contact-wrapper{
+max-width:700px;
+}
 
-      .hero {
-        padding: 8px;
-      }
+form{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
 
-      .hero-video-container {
-        top: 8px;
-        left: 8px;
-        right: 8px;
-        border-radius: 16px;
-      }
+input,
+textarea{
+padding:16px;
+border:1px solid #ddd;
+border-radius:10px;
+font-family:inherit;
+}
 
-      .hero-content {
-        padding-left: 24px;
-        padding-right: 24px;
-        padding-top: 40px;
-      }
+textarea{
+min-height:180px;
+resize:vertical;
+}
 
-      .hero-title {
-        font-size: clamp(48px, 10vw, 140px);
-        max-width: 100%;
-      }
+button.submit{
+padding:16px;
+background:#111;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
 
-      .hero-text-right {
-        position: static;
-        transform: none;
-        text-align: left;
-        margin-top: 40px;
-      }
+footer{
+padding:60px;
+text-align:center;
+color:#777;
+}
 
-      .hero-services {
-        font-size: 14px;
-      }
+/* MOBILE */
 
-      .floating-card {
-        position: static;
-        margin-top: 40px;
-        width: fit-content;
-      }
+@media(max-width:768px){
 
-      .mobile-menu {
-        padding: 30px 20px;
-      }
+header{
+padding:0 20px;
+}
 
-      .mobile-menu a {
-        font-size: 14px;
-      }
-    }
+nav{
+gap:20px;
+}
 
-    /* EXTRA SMALL */
-    @media (max-width: 480px) {
-      .hero-content {
-        padding-top: 30px;
-      }
+.hero-content{
+padding:40px;
+}
 
-      .hero-title {
-        font-size: clamp(36px, 8vw, 100px);
-      }
+.hero-title{
+font-size:58px;
+}
 
-      .floating-card {
-        flex-direction: column;
-        text-align: center;
-        padding: 16px;
-      }
+.floating-card{
+left:20px;
+right:20px;
+bottom:20px;
+max-width:none;
+}
 
-      .card-image {
-        width: 64px;
-        height: 64px;
-      }
+.section-title{
+font-size:38px;
+}
 
-      .card-role {
-        font-size: 11px;
-      }
+.about-text{
+font-size:18px;
+}
 
-      .card-name {
-        font-size: 14px;
-      }
+}
 
-      .card-button {
-        width: 100%;
-      }
-    }
-  </style>
+</style>
 </head>
+
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="header-logo">Guilherme Prestes</div>
-    
-    <nav>
-      <ul>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+<header>
 
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </header>
+<div class="logo">
+Guilherme Prestes
+</div>
 
-  <!-- MOBILE MENU -->
-  <nav class="mobile-menu" id="mobileMenu">
-    <a href="#work">Work</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<nav>
+<a href="#work">Work</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</nav>
 
-  <!-- HERO SECTION -->
-  <section class="hero">
-    <!-- Video Background -->
-    <div class="hero-video-container">
-      <video id="heroVideo" autoplay muted loop playsinline preload="auto">
-        <source src="assets/showreel.mp4" type="video/mp4">
-      </video>
-    </div>
+</header>
 
-    <!-- Content -->
-    <div class="hero-content">
-      <div class="hero-text-left">
-        <h1 class="hero-title">Guilherme Prestes</h1>
-      </div>
+<section class="hero" id="hero">
 
-      <div class="hero-text-right">
-        <div class="hero-services">
-          Video Editor<br>Motion Designer
-        </div>
-      </div>
-    </div>
+<video
+id="heroVideo"
+autoplay
+muted
+loop
+playsinline
+preload="auto"
+>
+<source src="assets/showreel.mp4" type="video/mp4">
+</video>
 
-    <!-- Floating Card -->
-    <div class="floating-card">
-      <div class="card-image">
-        <img src="assets/profile.jpg" alt="Guilherme Prestes">
-      </div>
-      <div class="card-content">
-        <div class="card-role">Video Editor / Motion Designer</div>
-        <div class="card-name">Guilherme Prestes</div>
-        <button class="card-button">Let's Talk</button>
-      </div>
-    </div>
-  </section>
+<div class="dark-overlay"></div>
+<div class="noise"></div>
 
-  <script>
-    // Mobile Menu Toggle
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
+<div class="hero-content">
 
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      mobileMenu.classList.toggle('active');
-    });
+<h1 class="hero-title">
+Guilherme<br>
+Prestes
+</h1>
 
-    // Close menu when clicking on a link
-    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-    mobileMenuLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('active');
-      });
-    });
+</div>
 
-    // Force video to play
-    const heroVideo = document.getElementById('heroVideo');
-    
-    // Try to play video
-    const playPromise = heroVideo.play();
-    
-    if (playPromise !== undefined) {
-      playPromise.catch(error => {
-        console.log('Autoplay bloqueado:', error);
-        // Se o autoplay foi bloqueado, o vídeo terá play no primeiro clique
-        document.addEventListener('click', () => {
-          heroVideo.play();
-        }, { once: true });
-      });
-    }
+<button id="playBtn" class="play-btn">
+▶
+</button>
 
-    // Garante que o vídeo inicia quando carregado
-    heroVideo.addEventListener('loadeddata', () => {
-      heroVideo.play().catch(error => {
-        console.log('Erro ao reproduzir:', error);
-      });
-    });
-  </script>
+<div class="floating-card">
+
+<div class="card-image">
+<img src="assets/profile.jpg" alt="">
+</div>
+
+<div>
+
+<div class="card-role">
+Video Editor / Motion Designer
+</div>
+
+<div class="card-name">
+Guilherme Prestes
+</div>
+
+<a
+class="card-button"
+href="https://wa.me/353834661531"
+target="_blank">
+Let's Talk
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="work" class="content">
+
+<h2 class="section-title">Selected Work</h2>
+
+<div class="work-grid">
+
+<div class="work-item">
+<h3>Motion Design</h3>
+<p>Commercial, branded content and digital campaigns.</p>
+</div>
+
+<div class="work-item">
+<h3>Video Editing</h3>
+<p>Advertising, social media, corporate and broadcast projects.</p>
+</div>
+
+<div class="work-item">
+<h3>Animation</h3>
+<p>2D and mixed-media animation focused on storytelling.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="about" class="content">
+
+<h2 class="section-title">About</h2>
+
+<div class="about-text">
+
+<p>
+I’m a Motion Designer and Video Editor with over 16 years of experience across animation, advertising, post-production and branded content.
+</p>
+
+<p>
+Throughout my career, I have collaborated with agencies, studios and clients across Europe, North America and international markets, creating visual content that combines design, rhythm and storytelling across digital and broadcast media.
+</p>
+
+<p>
+My portfolio includes work for globally recognised brands such as PlayStation, Vodafone, Heinz and KPMG, delivering motion graphics, commercial campaigns and engaging visual experiences for diverse audiences.
+</p>
+
+<p>
+I also had the opportunity to contribute to the animated feature film Light of the World, directed by Tom Bancroft, former Disney animator known for his work on The Lion King, Mulan and Beauty and the Beast.
+</p>
+
+<p>
+Today I help brands, agencies and creative teams transform ideas into impactful visual communication through motion design, editing and creative direction.
+</p>
+
+</div>
+
+</section>
+
+<section id="contact" class="content">
+
+<h2 class="section-title">Contact</h2>
+
+<div class="contact-wrapper">
+
+<form
+action="https://formsubmit.co/prestes.g@gmail.com"
+method="POST"
+>
+
+<input
+type="hidden"
+name="_subject"
+value="New message from portfolio">
+
+<input
+type="text"
+name="name"
+placeholder="Your Name"
+required>
+
+<input
+type="email"
+name="email"
+placeholder="Your Email"
+required>
+
+<textarea
+name="message"
+placeholder="Tell me about your project..."
+required></textarea>
+
+<button class="submit" type="submit">
+Send Message
+</button>
+
+</form>
+
+</div>
+
+</section>
+
+<footer>
+© 2025 Guilherme Prestes
+</footer>
+
+<script>
+
+const hero = document.getElementById('hero');
+const video = document.getElementById('heroVideo');
+const playBtn = document.getElementById('playBtn');
+
+video.play().catch(()=>{});
+
+playBtn.addEventListener('click',()=>{
+
+hero.classList.add('playing');
+
+video.muted = false;
+
+video.play();
+
+});
+
+</script>
 
 </body>
 </html>

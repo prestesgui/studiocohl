@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -18,14 +16,9 @@ padding:0;
 box-sizing:border-box;
 }
 
-html{
-scroll-behavior:smooth;
-}
-
 body{
 font-family:'Inter',sans-serif;
 background:#fff;
-color:#111;
 overflow-x:hidden;
 }
 
@@ -42,31 +35,15 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:0 40px;
-border-bottom:1px solid #eee;
 z-index:1000;
-}
-
-.logo{
-font-size:13px;
-font-weight:700;
-letter-spacing:.5px;
-}
-
-nav{
-display:flex;
-gap:40px;
+border-bottom:1px solid #eee;
 }
 
 nav a{
+margin-left:30px;
 text-decoration:none;
 color:#111;
 font-size:13px;
-font-weight:500;
-transition:.3s;
-}
-
-nav a:hover{
-opacity:.5;
 }
 
 /* HERO */
@@ -79,905 +56,536 @@ margin-left:12px;
 margin-right:12px;
 border-radius:24px;
 overflow:hidden;
-transition:1s ease;
 background:#000;
+transition:0.8s ease;
 }
 
-.hero-player{
-position:relative;
-width:95vw;
-max-width:1920px;
-height:auto;
-margin:110px auto 60px;
-background:#000;
-border-radius:24px;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-}
+/* VIDEO BASE (HERO MODE) */
 
-.hero video{
+#heroVideo{
 position:absolute;
 inset:0;
 width:100%;
 height:100%;
 object-fit:cover;
-
-filter:
-grayscale(100%)
-blur(3px)
-brightness(.45)
-contrast(1.2);
-
-transition:1.2s ease;
+filter:grayscale(100%) blur(3px) brightness(.5);
+transition:1s ease;
 }
 
-.hero-player video{
-position:relative;
-width:100%;
-height:auto;
-max-height:85vh;
-display:block;
-object-fit:contain;
-background:#000;
-border-radius:24px;
+/* OVERLAY */
 
-}
-
-.dark-overlay{
+.overlay{
 position:absolute;
 inset:0;
-background:#000;
-opacity:.25;
+background:rgba(0,0,0,.25);
 z-index:2;
-transition:1s;
 }
 
-.hero.hero-player .dark-overlay{
-opacity:0;
-}
+/* NOISE ANIMADO (TV EFFECT) */
 
 .noise{
 position:absolute;
 inset:0;
-pointer-events:none;
 z-index:3;
-opacity:.14;
-
-background-image:
-url("https://grainy-gradients.vercel.app/noise.svg");
-
-background-size:220px;
-
-mix-blend-mode:screen;
-
-animation:noise .18s steps(4) infinite;
-
-transition:1s;
+pointer-events:none;
+opacity:.12;
+background-image:url("https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif");
+mix-blend-mode:overlay;
 }
 
-@keyframes noise{
-
-0%{
-transform:translate(0,0);
-}
-
-25%{
-transform:translate(-2%,1%);
-}
-
-50%{
-transform:translate(2%,-1%);
-}
-
-75%{
-transform:translate(-1%,2%);
-}
-
-100%{
-transform:translate(0,0);
-}
-
-}
-
-.hero.hero-player .noise{
-opacity:0;
-}
-
-.hero-content{
-position:relative;
-z-index:20;
-height:100%;
-padding:80px;
-display:flex;
-align-items:flex-start;
-}
+/* HERO TEXT */
 
 .hero-title{
-
-font-size:clamp(60px,8vw,130px);
-
+position:absolute;
+z-index:5;
+top:80px;
+left:80px;
+font-size:clamp(60px,7vw,140px);
 font-weight:900;
-
-line-height:.9;
-
-letter-spacing:-4px;
-
 color:white;
-
-max-width:700px;
-
-transition:1s ease;
+line-height:0.9;
 }
 
-.hero.hero-player .hero-title{
-opacity:0;
-transform:translateY(-40px);
-pointer-events:none;
-}
+/* PLAY BUTTON */
 
 .play-btn{
-
 position:absolute;
-
 top:50%;
-
 left:50%;
-
 transform:translate(-50%,-50%);
-
 width:90px;
-
 height:90px;
-
 border-radius:50%;
-
-background:white;
-
 border:none;
-
-font-size:32px;
-
 cursor:pointer;
-
-z-index:30;
-
-box-shadow:
-0 20px 60px rgba(0,0,0,.25);
-
-transition:.3s;
+z-index:10;
+font-size:28px;
 }
 
-.play-btn:hover{
-transform:
-translate(-50%,-50%)
-scale(1.08);
-}
+/* LETS TALK FIXO */
 
-.hero.hero-player .play-btn{
-display:none;
-}
-/* CARD */
-
-.floating-card{
-
+.lets-talk{
 position:absolute;
-
 right:40px;
-
 bottom:40px;
-
-background:white;
-
-padding:18px;
-
-border-radius:22px;
-
-display:flex;
-
-align-items:center;
-
-gap:18px;
-
-z-index:40;
-
-max-width:400px;
-
-box-shadow:
-0 30px 80px rgba(0,0,0,.18);
-
-transition:1s ease;
-
-}
-
-.card-image{
-
-width:120px;
-
-height:120px;
-
-border-radius:16px;
-
-overflow:hidden;
-
-flex-shrink:0;
-
-transition:1s ease;
-
-}
-
-.card-image img{
-
-width:100%;
-height:100%;
-object-fit:cover;
-
-}
-
-.card-role{
-
-font-size:11px;
-
-color:#777;
-
-margin-bottom:6px;
-
-transition:1s;
-
-}
-
-.card-name{
-
-font-size:15px;
-
-font-weight:700;
-
-margin-bottom:12px;
-
-transition:1s;
-
-}
-
-.card-button{
-
-display:inline-block;
-
-padding:10px 18px;
-
-background:#111;
-
-color:white;
-
-font-size:11px;
-
-border-radius:999px;
-
-text-decoration:none;
-
-transition:.3s;
-
-}
-
-.card-button:hover{
-
-transform:translateY(-2px);
-
-}
-
-.hero.hero-player .card-image,
-.hero.hero-player .card-role,
-.hero.hero-player .card-name{
-
-opacity:0;
-
-transform:translateY(20px);
-
-pointer-events:none;
-
-}
-
-.hero-player .card-image,
-.hero-player .card-role,
-.hero-player .card-name{
-opacity:0;
-width:0;
-height:0;
-overflow:hidden;
-margin:0;
-}
-
-.hero-player .floating-card{
-padding:0;
-background:transparent;
-box-shadow:none;
-backdrop-filter:none;
-}
-transform:none;
-z-index:9999;
-position:absolute;
-right:30px;
-bottom:30px;
-
-}
-
-.hero.hero-player .card-button{
-padding:14px 28px;
-font-size:14px;
-font-weight:700;
-border-radius:999px;
+z-index:10;
 background:#111;
 color:#fff;
+padding:10px 18px;
+border-radius:999px;
+font-size:12px;
 text-decoration:none;
-display:inline-flex;
-align-items:center;
-justify-content:center;
-min-width:150px;
-
 }
 
-/* CONTENT */
+/* CARD */
 
-section.content{
-
-padding:120px 10%;
-
-}
-
-.section-title{
-
-font-size:52px;
-
-font-weight:900;
-
-margin-bottom:60px;
-
-letter-spacing:-2px;
-
-}
-
-.work-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(320px,1fr));
-
-gap:30px;
-
-}
-
-.work-item{
-
-background:#f5f5f5;
-
-border-radius:20px;
-
-padding:40px;
-
-transition:.4s;
-
-}
-
-.work-item:hover{
-
-transform:translateY(-8px);
-
-}
-
-.work-item h3{
-
-font-size:28px;
-
-margin-bottom:10px;
-
-}
-
-.work-item p{
-
-line-height:1.7;
-
-color:#666;
-
-}
-
-/* ABOUT */
-
-.about-text{
-
-max-width:900px;
-
-font-size:20px;
-
-line-height:1.9;
-
-color:#444;
-
-}
-
-.about-text p{
-
-margin-bottom:32px;
-
-}
-
-/* CONTACT */
-
-.contact-wrapper{
-
-max-width:700px;
-
-}
-
-form{
-
+.card{
+position:absolute;
+left:40px;
+bottom:40px;
+z-index:10;
 display:flex;
-
-flex-direction:column;
-
-gap:20px;
-
+gap:15px;
+align-items:center;
+background:#fff;
+padding:12px;
+border-radius:16px;
 }
 
-input,
-textarea{
-
-padding:18px;
-
-border:1px solid #ddd;
-
+.card img{
+width:80px;
+height:80px;
 border-radius:12px;
-
-font-family:inherit;
-
-font-size:15px;
-
+object-fit:cover;
 }
 
-textarea{
-
-min-height:180px;
-
-resize:vertical;
-
-}
-
-button.submit{
-
-padding:18px;
-
-background:#111;
-
-color:white;
-
-border:none;
-
-border-radius:12px;
-
-font-size:14px;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-button.submit:hover{
-
-background:#333;
-
-}
-
-footer{
-
-padding:60px;
-
-text-align:center;
-
+.card small{
+display:block;
 color:#777;
-
 }
 
-/* MOBILE */
+/* ESTADO PLAYING */
 
-@media(max-width:768px){
-
-header{
-padding:0 20px;
+.hero.playing #heroVideo{
+object-fit:contain;
+filter:none;
+background:#000;
 }
 
-nav{
-gap:20px;
+.hero.playing .hero-title{
+display:none;
 }
 
-.hero-content{
-padding:40px;
+.hero.playing .card{
+display:none;
 }
 
-.hero-title{
-font-size:58px;
+.hero.playing .overlay{
+opacity:0;
 }
 
-.floating-card{
-
-left:20px;
-
-right:20px;
-
-bottom:20px;
-
-max-width:none;
-
-}
-
-.section-title{
-font-size:38px;
-}
-
-.about-text{
-font-size:18px;
-}
-
+.hero.playing .play-btn{
+display:none;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <header>
-
-<div class="logo">
-Guilherme Prestes
-</div>
-
+<div><strong>Guilherme Prestes</strong></div>
 <nav>
 <a href="#work">Work</a>
 <a href="#about">About</a>
 <a href="#contact">Contact</a>
 </nav>
-
 </header>
 
 <section class="hero" id="hero">
 
-<video
-id="heroVideo"
-autoplay
-muted
-loop
-playsinline
-preload="auto"
-controlslist="nodownload"
->
-
-<source
-src="assets/showreel.mp4"
-type="video/mp4">
-
+<video id="heroVideo" autoplay muted loop playsinline>
+<source src="assets/showreel.mp4" type="video/mp4">
 </video>
 
-<div class="dark-overlay"></div>
-
+<div class="overlay"></div>
 <div class="noise"></div>
 
-<div class="hero-content">
-
 <h1 class="hero-title">
-
-Guilherme<br>
-Prestes
-
+Guilherme<br>Prestes
 </h1>
 
-</div>
+<button class="play-btn" id="playBtn">▶</button>
 
-<button
-id="playBtn"
-class="play-btn">
-
-▶
-
-</button>
-
-<div class="floating-card">
-
-<div class="card-image">
-
-<img
-src="assets/profile.jpg"
-alt="Guilherme Prestes">
-
-</div>
-
-<div>
-
-<div class="card-role">
-
-Video Editor / Motion Designer
-
-</div>
-
-<div class="card-name">
-
-Guilherme Prestes
-
-</div>
-
-<a
-class="card-button"
-href="https://wa.me/353834661531"
-target="_blank">
-
-Let's Talk
-
+<a class="lets-talk" href="https://wa.me/353834661531" target="_blank">
+Let’s Talk
 </a>
 
+<div class="card">
+<img src="assets/profile.jpg">
+<div>
+<strong>Guilherme Prestes</strong>
+<small>Motion / Editor</small>
 </div>
-
-</div>
-
-</section>
-<section id="work" class="content">
-
-<h2 class="section-title">
-
-Selected Work
-
-</h2>
-
-<div class="work-grid">
-
-<div class="work-item">
-
-<h3>Motion Design</h3>
-
-<p>
-Commercial campaigns, branded content,
-social media and digital experiences for
-international clients.
-</p>
-
-</div>
-
-<div class="work-item">
-
-<h3>Video Editing</h3>
-
-<p>
-Advertising, broadcast, online content,
-corporate communication and high-end
-post-production.
-</p>
-
-</div>
-
-<div class="work-item">
-
-<h3>Animation</h3>
-
-<p>
-2D animation, mixed media and storytelling
-focused motion design projects.
-</p>
-
-</div>
-
 </div>
 
 </section>
-
-<section id="about" class="content">
-
-<h2 class="section-title">
-
-About
-
-</h2>
-
-<div class="about-text">
-
-<p>
-I’m a Motion Designer and Video Editor with over
-16 years of experience across animation,
-advertising, post-production and branded
-content.
-</p>
-
-<p>
-Throughout my career, I have collaborated with
-agencies, studios and clients across Europe,
-North America and international markets,
-creating visual content that combines design,
-rhythm and storytelling across digital and
-broadcast media.
-</p>
-
-<p>
-My portfolio includes work for globally
-recognised brands such as PlayStation,
-Vodafone, Heinz and KPMG, delivering motion
-graphics, commercial campaigns and engaging
-visual experiences for diverse audiences.
-</p>
-
-<p>
-I also had the opportunity to contribute to the
-animated feature film Light of the World,
-directed by Tom Bancroft, former Disney
-animator known for his work on The Lion King,
-Mulan and Beauty and the Beast.
-</p>
-
-<p>
-Today I help brands, agencies and creative teams
-transform ideas into impactful visual
-communication through motion design, editing
-and creative direction.
-</p>
-
-</div>
-
-</section>
-
-<section id="contact" class="content">
-
-<h2 class="section-title">
-
-Contact
-
-</h2>
-
-<div class="contact-wrapper">
-
-<form
-action="https://formsubmit.co/prestes.g@gmail.com"
-method="POST">
-
-<input
-type="hidden"
-name="_subject"
-value="New Portfolio Message">
-
-<input
-type="hidden"
-name="_captcha"
-value="false">
-
-<input
-type="hidden"
-name="_template"
-value="table">
-
-<input
-type="text"
-name="name"
-placeholder="Your Name"
-required>
-
-<input
-type="email"
-name="email"
-placeholder="Your Email"
-required>
-
-<textarea
-name="message"
-placeholder="Tell me about your project..."
-required>
-</textarea>
-
-<button
-class="submit"
-type="submit">
-
-Send Message
-
-</button>
-
-</form>
-
-</div>
-
-</section>
-
-<footer>
-
-© 2025 Guilherme Prestes
-
-</footer>
-
 <script>
 
 const hero = document.getElementById('hero');
 const video = document.getElementById('heroVideo');
 const playBtn = document.getElementById('playBtn');
 
+/* garante autoplay inicial */
 video.play().catch(()=>{});
 
-playBtn.addEventListener('click', ()=>{
+/* estado player */
+let isPlaying = false;
 
-hero.classList.add('hero-player');
+/* CLICK PLAY */
+playBtn.addEventListener('click', () => {
 
-video.pause();
+isPlaying = true;
 
-video.currentTime = 0;
+/* ativa modo player */
+hero.classList.add('playing');
 
-video.loop = false;
-
-video.controls = true;
-
+/* remove mute e inicia áudio */
 video.muted = false;
-
+video.currentTime = 0;
 video.play();
 
+/* cria controles custom simples */
+createControls();
+
 });
-video.addEventListener('ended', ()=>{
 
-hero.classList.remove('hero-player');
+/* quando vídeo termina → volta pro hero */
+video.addEventListener('ended', () => {
 
-video.controls = false;
+resetHero();
+
+});
+
+/* RESET HERO */
+function resetHero(){
+
+isPlaying = false;
+
+hero.classList.remove('playing');
 
 video.muted = true;
-
-video.loop = true;
-
 video.currentTime = 0;
-
 video.play();
 
-});
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
-
-anchor.addEventListener('click', function(e){
-
-e.preventDefault();
-
-const target =
-document.querySelector(
-this.getAttribute('href')
-);
-
-if(target){
-
-target.scrollIntoView({
-behavior:'smooth'
-});
+/* remove controls */
+removeControls();
 
 }
 
-});
+/* CONTROLES */
+function createControls(){
 
-});
+if(document.querySelector('.controls')) return;
 
-document.addEventListener("visibilitychange",()=>{
+const controls = document.createElement('div');
+controls.className = 'controls';
+
+controls.innerHTML = `
+<button id="pauseBtn">⏸</button>
+<input id="progress" type="range" min="0" max="100" value="0">
+<button id="muteBtn">🔊</button>
+<button id="fsBtn">⛶</button>
+`;
+
+document.body.appendChild(controls);
+
+/* pause/play */
+document.getElementById('pauseBtn').onclick = () => {
+
+if(video.paused){
+video.play();
+} else {
+video.pause();
+}
+
+};
+
+/* mute */
+document.getElementById('muteBtn').onclick = () => {
+
+video.muted = !video.muted;
+
+};
+
+/* fullscreen */
+document.getElementById('fsBtn').onclick = () => {
+
+if(video.requestFullscreen){
+video.requestFullscreen();
+}
+
+};
+
+/* progress */
+const progress = document.getElementById('progress');
+
+video.ontimeupdate = () => {
+progress.value = (video.currentTime / video.duration) * 100;
+};
+
+progress.oninput = () => {
+video.currentTime = (progress.value / 100) * video.duration;
+};
+
+}
+
+/* remove controls */
+function removeControls(){
+const c = document.querySelector('.controls');
+if(c) c.remove();
+}
+
+</script>
+
+</body>
+</html>
+<style>
+
+/* =========================
+   CONTROLES PLAYER
+========================= */
+
+.controls{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:10px;
+align-items:center;
+background:rgba(0,0,0,.6);
+padding:10px 14px;
+border-radius:999px;
+z-index:9999;
+backdrop-filter:blur(10px);
+}
+
+.controls button{
+background:#fff;
+border:none;
+padding:6px 10px;
+border-radius:8px;
+cursor:pointer;
+font-size:14px;
+}
+
+.controls input[type="range"]{
+width:140px;
+}
+
+/* =========================
+   LETS TALK MELHORADO
+========================= */
+
+.lets-talk{
+position:absolute;
+right:40px;
+bottom:40px;
+z-index:9999;
+background:#111;
+color:#fff;
+padding:14px 22px;
+border-radius:999px;
+font-size:14px;
+text-decoration:none;
+transition:0.3s ease;
+box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.lets-talk:hover{
+transform:scale(1.05);
+}
+
+/* no modo play ele continua visível mas mais elegante */
+.hero.playing .lets-talk{
+opacity:1;
+}
+
+/* =========================
+   NOISE TV REAL (ANIMADO)
+========================= */
+
+.noise{
+position:absolute;
+inset:0;
+z-index:3;
+pointer-events:none;
+opacity:.12;
+
+/* substitui o GIF por camadas CSS animadas */
+background:
+repeating-radial-gradient(circle at 20% 30%, rgba(255,255,255,.06) 0 1px, transparent 1px 6px),
+repeating-radial-gradient(circle at 70% 60%, rgba(255,255,255,.04) 0 1px, transparent 1px 5px);
+
+mix-blend-mode:overlay;
+animation:noiseMove .2s infinite linear;
+}
+
+@keyframes noiseMove{
+0%{transform:translate(0,0);}
+25%{transform:translate(-1%,1%);}
+50%{transform:translate(1%,-1%);}
+75%{transform:translate(-1%,-1%);}
+100%{transform:translate(1%,1%);}
+}
+
+/* remove noise no modo player */
+.hero.playing .noise{
+opacity:0;
+}
+
+/* =========================
+   GARANTE CAMADAS CORRETAS
+========================= */
+
+.hero video{
+z-index:1;
+}
+
+.overlay{
+z-index:2;
+}
+
+.noise{
+z-index:3;
+}
+
+.hero-title{
+z-index:5;
+}
+
+.play-btn{
+z-index:10;
+}
+
+.card{
+z-index:10;
+}
+
+.lets-talk{
+z-index:9999;
+}
+
+</style>
+<script>
+
+/* =========================
+   FIX FINAL DE PROPORÇÃO
+========================= */
+
+/* garante que o vídeo nunca “quebra” em telas diferentes */
+function fixVideoFit(){
+
+const w = window.innerWidth;
+const h = window.innerHeight;
+
+/* se estiver em modo player */
+if(hero.classList.contains('playing')){
+
+/* evita corte em qualquer proporção */
+video.style.width = "100%";
+video.style.height = "100%";
+video.style.objectFit = "contain";
+video.style.background = "#000";
+
+} else {
+
+/* hero mode */
+video.style.width = "100%";
+video.style.height = "100%";
+video.style.objectFit = "cover";
+
+}
+
+}
+
+window.addEventListener('resize', fixVideoFit);
+window.addEventListener('orientationchange', fixVideoFit);
+
+/* chama ao iniciar */
+fixVideoFit();
+
+
+/* =========================
+   RESET MAIS ROBUSTO
+========================= */
+
+function hardReset(){
+
+hero.classList.remove('playing');
+
+video.pause();
+video.currentTime = 0;
+video.muted = true;
+
+/* volta para loop hero */
+video.loop = true;
+video.play().catch(()=>{});
+
+/* remove controles se existirem */
+document.querySelectorAll('.controls').forEach(c => c.remove());
+
+fixVideoFit();
+
+}
+
+/* sobrescreve evento ended com reset seguro */
+video.onended = () => {
+
+hardReset();
+
+};
+
+
+/* =========================
+   PROTEÇÃO iOS / MOBILE BUG
+========================= */
+
+document.addEventListener('visibilitychange', () => {
 
 if(document.hidden){
 
+/* pausa leve quando sai da aba */
 video.pause();
 
-}else{
+} else {
 
-if(hero.classList.contains("hero-player")){
-
-video.play();
-
-}else{
-
-video.muted = true;
-video.loop = true;
-video.play();
-
+if(hero.classList.contains('playing')){
+video.play().catch(()=>{});
 }
 
 }
 
 });
 
-</script>
-</body>
 
-</html>
+/* =========================
+   SEGURANÇA PLAY STATE
+========================= */
+
+setInterval(() => {
+
+/* se entrar em estado quebrado, corrige automaticamente */
+if(hero.classList.contains('playing')){
+
+if(video.readyState === 0){
+video.load();
+}
+
+}
+
+}, 2000);
+
+</script>
 

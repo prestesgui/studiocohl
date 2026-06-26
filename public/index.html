@@ -962,52 +962,7 @@ video.play();
 
 });
 
-video.addEventListener("pause",()=>{
-
-if(
-hero.classList.contains("hero-player")
-&&
-video.currentTime < video.duration - 0.3
-){
-
-playBtn.style.display = "flex";
-
-playBtn.style.width = "70px";
-playBtn.style.height = "70px";
-playBtn.style.fontSize = "24px";
-
-playBtn.innerHTML = "▶";
-
-playBtn.style.position = "fixed";
-playBtn.style.left = "50%";
-playBtn.style.top = "50%";
-playBtn.style.transform =
-"translate(-50%,-50%)";
-
-}
-
-});
-
-video.addEventListener("play",()=>{
-
-playBtn.style.display = "none";
-
-});
-
-playBtn.addEventListener("click",()=>{
-
-if(hero.classList.contains("hero-player")){
-
-video.play();
-
-playBtn.style.display = "none";
-
-}
-
-});
-
 </script>
-
 </body>
 
 </html>

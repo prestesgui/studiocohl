@@ -70,6 +70,7 @@ height:100%;
 object-fit:cover;
 filter:grayscale(100%) blur(3px) brightness(.5);
 transition:1s ease;
+z-index:1;
 }
 
 /* OVERLAY */
@@ -89,8 +90,19 @@ inset:0;
 z-index:3;
 pointer-events:none;
 opacity:.12;
-background-image:url("https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif");
+background-image:
+repeating-radial-gradient(circle at 20% 30%, rgba(255,255,255,.06) 0 1px, transparent 1px 6px),
+repeating-radial-gradient(circle at 70% 60%, rgba(255,255,255,.04) 0 1px, transparent 1px 5px);
 mix-blend-mode:overlay;
+animation:noiseMove .2s infinite linear;
+}
+
+@keyframes noiseMove{
+0%{transform:translate(0,0);}
+25%{transform:translate(-1%,1%);}
+50%{transform:translate(1%,-1%);}
+75%{transform:translate(-1%,-1%);}
+100%{transform:translate(1%,1%);}
 }
 
 /* HERO TEXT */
@@ -164,27 +176,88 @@ display:block;
 color:#777;
 }
 
-/* ESTADO PLAYING */
+/* ===== FULLSCREEN VIDEO MODE ===== */
 
-.hero.playing #heroVideo{
+#heroVideo.fullscreen-video{
+position:fixed !important;
+top:0 !important;
+left:0 !important;
+right:0 !important;
+bottom:0 !important;
+width:100% !important;
+height:100% !important;
+border-radius:0 !important;
+margin:0 !important;
+padding:0 !important;
+z-index:9999 !important;
 object-fit:contain;
-filter:none;
+filter:none !important;
 background:#000;
 }
 
-.hero.playing .hero-title{
+/* CONTROLES PLAYER */
+
+.controls{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:10px;
+align-items:center;
+background:rgba(0,0,0,.8);
+padding:10px 14px;
+border-radius:999px;
+z-index:10000;
+backdrop-filter:blur(10px);
+}
+
+.controls button{
+background:#fff;
+border:none;
+padding:6px 10px;
+border-radius:8px;
+cursor:pointer;
+font-size:14px;
+}
+
+.controls input[type="range"]{
+width:140px;
+}
+
+/* CLOSE BUTTON */
+
+.close-video-btn{
+position:fixed;
+top:30px;
+right:30px;
+z-index:10001;
+width:50px;
+height:50px;
+border-radius:50%;
+border:none;
+background:rgba(255,255,255,.2);
+color:#fff;
+font-size:24px;
+cursor:pointer;
+backdrop-filter:blur(10px);
 display:none;
+align-items:center;
+justify-content:center;
+transition:0.3s ease;
 }
 
-.hero.playing .card{
-display:none;
+.close-video-btn:hover{
+background:rgba(255,255,255,.3);
 }
 
-.hero.playing .overlay{
-opacity:0;
+.close-video-btn.show{
+display:flex;
 }
 
-.hero.playing .play-btn{
+/* ESCONDE HERO QUANDO PLAYING */
+
+.hero.playing{
 display:none;
 }
 
@@ -218,7 +291,7 @@ Guilherme<br>Prestes
 <button class="play-btn" id="playBtn">▶</button>
 
 <a class="lets-talk" href="https://wa.me/353834661531" target="_blank">
-Let’s Talk
+Let's Talk
 </a>
 
 <div class="card">
@@ -230,11 +303,15 @@ Let’s Talk
 </div>
 
 </section>
+
+<button class="close-video-btn" id="closeBtn">✕</button>
+
 <script>
 
 const hero = document.getElementById('hero');
 const video = document.getElementById('heroVideo');
 const playBtn = document.getElementById('playBtn');
+const closeBtn = document.getElementById('closeBtn');
 
 /* garante autoplay inicial */
 video.play().catch(()=>{});
@@ -242,12 +319,15 @@ video.play().catch(()=>{});
 /* estado player */
 let isPlaying = false;
 
-/* CLICK PLAY */
+/* CLICK PLAY - FULLSCREEN */
 playBtn.addEventListener('click', () => {
 
 isPlaying = true;
 
-/* ativa modo player */
+/* add classe fullscreen ao vídeo */
+video.classList.add('fullscreen-video');
+
+/* esconde hero */
 hero.classList.add('playing');
 
 /* remove mute e inicia áudio */
@@ -255,10 +335,16 @@ video.muted = false;
 video.currentTime = 0;
 video.play();
 
-/* cria controles custom simples */
+/* mostra botão de fechar */
+closeBtn.classList.add('show');
+
+/* cria controles custom */
 createControls();
 
 });
+
+/* BOTÃO FECHAR */
+closeBtn.addEventListener('click', resetHero);
 
 /* quando vídeo termina → volta pro hero */
 video.addEventListener('ended', () => {
@@ -272,8 +358,16 @@ function resetHero(){
 
 isPlaying = false;
 
+/* remove classe fullscreen */
+video.classList.remove('fullscreen-video');
+
+/* mostra hero novamente */
 hero.classList.remove('playing');
 
+/* esconde botão fechar */
+closeBtn.classList.remove('show');
+
+/* volta para hero mode */
 video.muted = true;
 video.currentTime = 0;
 video.play();
@@ -318,11 +412,13 @@ video.muted = !video.muted;
 
 };
 
-/* fullscreen */
+/* fullscreen nativo */
 document.getElementById('fsBtn').onclick = () => {
 
 if(video.requestFullscreen){
 video.requestFullscreen();
+} else if(video.webkitRequestFullscreen){
+video.webkitRequestFullscreen();
 }
 
 };
@@ -346,246 +442,16 @@ const c = document.querySelector('.controls');
 if(c) c.remove();
 }
 
-</script>
+/* ATALHO ESC */
+document.addEventListener('keydown', (e) => {
 
-</body>
-</html>
-<style>
-
-/* =========================
-   CONTROLES PLAYER
-========================= */
-
-.controls{
-position:fixed;
-bottom:20px;
-left:50%;
-transform:translateX(-50%);
-display:flex;
-gap:10px;
-align-items:center;
-background:rgba(0,0,0,.6);
-padding:10px 14px;
-border-radius:999px;
-z-index:9999;
-backdrop-filter:blur(10px);
-}
-
-.controls button{
-background:#fff;
-border:none;
-padding:6px 10px;
-border-radius:8px;
-cursor:pointer;
-font-size:14px;
-}
-
-.controls input[type="range"]{
-width:140px;
-}
-
-/* =========================
-   LETS TALK MELHORADO
-========================= */
-
-.lets-talk{
-position:absolute;
-right:40px;
-bottom:40px;
-z-index:9999;
-background:#111;
-color:#fff;
-padding:14px 22px;
-border-radius:999px;
-font-size:14px;
-text-decoration:none;
-transition:0.3s ease;
-box-shadow:0 10px 30px rgba(0,0,0,.25);
-}
-
-.lets-talk:hover{
-transform:scale(1.05);
-}
-
-/* no modo play ele continua visível mas mais elegante */
-.hero.playing .lets-talk{
-opacity:1;
-}
-
-/* =========================
-   NOISE TV REAL (ANIMADO)
-========================= */
-
-.noise{
-position:absolute;
-inset:0;
-z-index:3;
-pointer-events:none;
-opacity:.12;
-
-/* substitui o GIF por camadas CSS animadas */
-background:
-repeating-radial-gradient(circle at 20% 30%, rgba(255,255,255,.06) 0 1px, transparent 1px 6px),
-repeating-radial-gradient(circle at 70% 60%, rgba(255,255,255,.04) 0 1px, transparent 1px 5px);
-
-mix-blend-mode:overlay;
-animation:noiseMove .2s infinite linear;
-}
-
-@keyframes noiseMove{
-0%{transform:translate(0,0);}
-25%{transform:translate(-1%,1%);}
-50%{transform:translate(1%,-1%);}
-75%{transform:translate(-1%,-1%);}
-100%{transform:translate(1%,1%);}
-}
-
-/* remove noise no modo player */
-.hero.playing .noise{
-opacity:0;
-}
-
-/* =========================
-   GARANTE CAMADAS CORRETAS
-========================= */
-
-.hero video{
-z-index:1;
-}
-
-.overlay{
-z-index:2;
-}
-
-.noise{
-z-index:3;
-}
-
-.hero-title{
-z-index:5;
-}
-
-.play-btn{
-z-index:10;
-}
-
-.card{
-z-index:10;
-}
-
-.lets-talk{
-z-index:9999;
-}
-
-</style>
-<script>
-
-/* =========================
-   FIX FINAL DE PROPORÇÃO
-========================= */
-
-/* garante que o vídeo nunca “quebra” em telas diferentes */
-function fixVideoFit(){
-
-const w = window.innerWidth;
-const h = window.innerHeight;
-
-/* se estiver em modo player */
-if(hero.classList.contains('playing')){
-
-/* evita corte em qualquer proporção */
-video.style.width = "100%";
-video.style.height = "100%";
-video.style.objectFit = "contain";
-video.style.background = "#000";
-
-} else {
-
-/* hero mode */
-video.style.width = "100%";
-video.style.height = "100%";
-video.style.objectFit = "cover";
-
-}
-
-}
-
-window.addEventListener('resize', fixVideoFit);
-window.addEventListener('orientationchange', fixVideoFit);
-
-/* chama ao iniciar */
-fixVideoFit();
-
-
-/* =========================
-   RESET MAIS ROBUSTO
-========================= */
-
-function hardReset(){
-
-hero.classList.remove('playing');
-
-video.pause();
-video.currentTime = 0;
-video.muted = true;
-
-/* volta para loop hero */
-video.loop = true;
-video.play().catch(()=>{});
-
-/* remove controles se existirem */
-document.querySelectorAll('.controls').forEach(c => c.remove());
-
-fixVideoFit();
-
-}
-
-/* sobrescreve evento ended com reset seguro */
-video.onended = () => {
-
-hardReset();
-
-};
-
-
-/* =========================
-   PROTEÇÃO iOS / MOBILE BUG
-========================= */
-
-document.addEventListener('visibilitychange', () => {
-
-if(document.hidden){
-
-/* pausa leve quando sai da aba */
-video.pause();
-
-} else {
-
-if(hero.classList.contains('playing')){
-video.play().catch(()=>{});
-}
-
+if(e.key === 'Escape' && isPlaying){
+resetHero();
 }
 
 });
 
-
-/* =========================
-   SEGURANÇA PLAY STATE
-========================= */
-
-setInterval(() => {
-
-/* se entrar em estado quebrado, corrige automaticamente */
-if(hero.classList.contains('playing')){
-
-if(video.readyState === 0){
-video.load();
-}
-
-}
-
-}, 2000);
-
 </script>
 
+</body>
+</html>
